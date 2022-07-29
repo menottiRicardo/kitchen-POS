@@ -21,7 +21,19 @@ export const getOrder = /* GraphQL */ `
           name
           total
           tableId
+          table {
+            id
+            tenantId
+            full
+            number
+            createdAt
+            updatedAt
+            tableOrdersId
+          }
           status
+          products {
+            nextToken
+          }
           createdAt
           updatedAt
         }
@@ -30,6 +42,37 @@ export const getOrder = /* GraphQL */ `
         tableOrdersId
       }
       status
+      products {
+        items {
+          id
+          orderID
+          productID
+          order {
+            id
+            tenantId
+            name
+            total
+            tableId
+            status
+            createdAt
+            updatedAt
+          }
+          product {
+            id
+            tenantId
+            name
+            price
+            image
+            description
+            createdAt
+            updatedAt
+            categoryProductsId
+          }
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -53,11 +96,31 @@ export const listOrders = /* GraphQL */ `
           tenantId
           full
           number
+          orders {
+            id
+            tenantId
+            name
+            total
+            tableId
+            status
+            createdAt
+            updatedAt
+          }
           createdAt
           updatedAt
           tableOrdersId
         }
         status
+        products {
+          items {
+            id
+            orderID
+            productID
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -83,11 +146,31 @@ export const getTable = /* GraphQL */ `
           tenantId
           full
           number
+          orders {
+            id
+            tenantId
+            name
+            total
+            tableId
+            status
+            createdAt
+            updatedAt
+          }
           createdAt
           updatedAt
           tableOrdersId
         }
         status
+        products {
+          items {
+            id
+            orderID
+            productID
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -115,7 +198,19 @@ export const listTables = /* GraphQL */ `
           name
           total
           tableId
+          table {
+            id
+            tenantId
+            full
+            number
+            createdAt
+            updatedAt
+            tableOrdersId
+          }
           status
+          products {
+            nextToken
+          }
           createdAt
           updatedAt
         }
@@ -138,6 +233,17 @@ export const getProduct = /* GraphQL */ `
         tenantId
         name
         products {
+          items {
+            id
+            tenantId
+            name
+            price
+            image
+            description
+            createdAt
+            updatedAt
+            categoryProductsId
+          }
           nextToken
         }
         createdAt
@@ -146,6 +252,37 @@ export const getProduct = /* GraphQL */ `
       price
       image
       description
+      orders {
+        items {
+          id
+          orderID
+          productID
+          order {
+            id
+            tenantId
+            name
+            total
+            tableId
+            status
+            createdAt
+            updatedAt
+          }
+          product {
+            id
+            tenantId
+            name
+            price
+            image
+            description
+            createdAt
+            updatedAt
+            categoryProductsId
+          }
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
       categoryProductsId
@@ -167,12 +304,25 @@ export const listProducts = /* GraphQL */ `
           id
           tenantId
           name
+          products {
+            nextToken
+          }
           createdAt
           updatedAt
         }
         price
         image
         description
+        orders {
+          items {
+            id
+            orderID
+            productID
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
         createdAt
         updatedAt
         categoryProductsId
@@ -192,9 +342,19 @@ export const getCategory = /* GraphQL */ `
           id
           tenantId
           name
+          category {
+            id
+            tenantId
+            name
+            createdAt
+            updatedAt
+          }
           price
           image
           description
+          orders {
+            nextToken
+          }
           createdAt
           updatedAt
           categoryProductsId
@@ -218,7 +378,160 @@ export const listCategories = /* GraphQL */ `
         tenantId
         name
         products {
+          items {
+            id
+            tenantId
+            name
+            price
+            image
+            description
+            createdAt
+            updatedAt
+            categoryProductsId
+          }
           nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getOrderProducts = /* GraphQL */ `
+  query GetOrderProducts($id: ID!) {
+    getOrderProducts(id: $id) {
+      id
+      orderID
+      productID
+      order {
+        id
+        tenantId
+        name
+        total
+        tableId
+        table {
+          id
+          tenantId
+          full
+          number
+          orders {
+            id
+            tenantId
+            name
+            total
+            tableId
+            status
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+          tableOrdersId
+        }
+        status
+        products {
+          items {
+            id
+            orderID
+            productID
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      product {
+        id
+        tenantId
+        name
+        category {
+          id
+          tenantId
+          name
+          products {
+            nextToken
+          }
+          createdAt
+          updatedAt
+        }
+        price
+        image
+        description
+        orders {
+          items {
+            id
+            orderID
+            productID
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        createdAt
+        updatedAt
+        categoryProductsId
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listOrderProducts = /* GraphQL */ `
+  query ListOrderProducts(
+    $filter: ModelOrderProductsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listOrderProducts(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        orderID
+        productID
+        order {
+          id
+          tenantId
+          name
+          total
+          tableId
+          table {
+            id
+            tenantId
+            full
+            number
+            createdAt
+            updatedAt
+            tableOrdersId
+          }
+          status
+          products {
+            nextToken
+          }
+          createdAt
+          updatedAt
+        }
+        product {
+          id
+          tenantId
+          name
+          category {
+            id
+            tenantId
+            name
+            createdAt
+            updatedAt
+          }
+          price
+          image
+          description
+          orders {
+            nextToken
+          }
+          createdAt
+          updatedAt
+          categoryProductsId
         }
         createdAt
         updatedAt

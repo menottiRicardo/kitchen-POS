@@ -34,7 +34,7 @@ const Table = ({ categories, products }: any) => {
   useEffect(() => {
     const loadProducts = async () => {
       const newProducts = await getProducts(selected, products);
-
+     
       setProductsList(newProducts);
     };
     loadProducts();
@@ -67,15 +67,12 @@ const Table = ({ categories, products }: any) => {
             />
           ))}
         </div>
-        <div className="overflow-scroll h-[54rem]  w-full">
+        <div className="overflow-scroll h-[42rem] w-full">
           <div className="grid grid-cols-3">
             {productList.map((product: ProductType) => (
               <Product
                 key={product.id}
-                price={product.price as number}
-                description=""
-                id={product.id}
-                name={product.name as string}
+                product={product}
               />
             ))}
           </div>

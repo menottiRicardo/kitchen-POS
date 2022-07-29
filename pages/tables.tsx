@@ -84,3 +84,4 @@ Tables.getLayout = function getLayout(page: ReactElement) {
 };
 
 export default Tables;
+

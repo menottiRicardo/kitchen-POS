@@ -5,7 +5,7 @@ import { MdOutlineMenuBook } from "react-icons/md";
 import Link from "next/link";
 const LeftMenu = ({ children }: any) => {
   return (
-    <div className="flex min-h-screen bg-gray-100">
+    <div className="flex bg-gray-100 min-h-screen">
       <div className="bg-primary-700 px-3 my-auto py-4 rounded-tr-xl rounded-br-xl pr-4">
         <Link passHref href={"/tables"}>
           <div className="bg-primary-600 text-white rounded-md p-2 h-10 my-5 flex items-center justify-center">

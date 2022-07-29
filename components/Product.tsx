@@ -1,51 +1,75 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { API, Storage } from "aws-amplify";
+import { useState } from "react";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { currentOrderAtom, orderType } from "../src/state/atoms";
+import { CreateOrderProductsInput, Product as ProductType } from "../src/API";
+import { createOrderProducts } from "../src/graphql/mutations";
+import { currentOrderAtom, OrderProducstAtom } from "../src/state/atoms";
 import { SaveProductAtom } from "../src/state/selectors";
 
 interface ProductProps {
-  categoryId?: string;
-  createdAt?: string;
-  description: string;
-
-  id: string;
-  name: string;
-  price: number;
-  qty?: number;
-  tenantId?: string;
-  updatedAt?: string;
-  image?: string;
+  product: ProductType;
 }
 
-const addProduct = async () => {};
 export type Flavor = {
   id: string;
   name: string;
 };
 
-const Product = ({ name, id, price, description, image }: ProductProps) => {
+const Product = ({ product }: ProductProps) => {
+  const { price, name, description, image } = product;
   const [add, setAdd] = useState(false);
   const currentOrder = useRecoilValue(currentOrderAtom);
+  const [orderProductAtom, setOrderProductAtom] =
+    useRecoilState(OrderProducstAtom);
   const saveNewProduct = useSetRecoilState(SaveProductAtom);
+
   const open = () => {
-    setAdd(true);
+    if (add === false) return setAdd(true);
   };
 
-  const addNewProduct = () => {
-    if (currentOrder === undefined) return;
-    const newOrder = {
-      id: currentOrder.id,
-      name: currentOrder.name,
-      products: [...currentOrder.products],
-    };
-    saveNewProduct(newOrder as any);
+  const addNewProduct = async () => {
+    if (orderProductAtom.id === undefined) {
+      const createNewRelation: CreateOrderProductsInput = {
+        orderID: currentOrder.id,
+        productID: product.id,
+      };
+
+      const created: any = await API.graphql({
+        query: createOrderProducts,
+        variables: { input: createNewRelation },
+      });
+      saveNewProduct(created.data.createOrderProducts);
+
+      setAdd(false);
+    }
   };
+
+  async function getProductById() {
+    
+    const s3Image = await Storage.get(image as string);
+    
+    console.log("product:", s3Image);
+  }
+
+  const renderImage = () => {
+    getProductById()
+    return <div>hola</div>
+  }
 
   return (
-    <div className="bg-white shadow-md rounded-md w-56 my-3" onClick={open}>
+    <div
+      className={`bg-white shadow-md rounded-md w-56 my-3 ${
+        add === false ? "max-h-52" : ""
+      }`}
+      onClick={open}
+    >
       {/* image */}
+      {image !== "" ? (
+        renderImage()
+      ) : (
+        <div className="h-28 w-54 bg-gray-400 rounded-t-md relative"></div>
+      )}
 
-      <div className="h-28 w-54 bg-gray-400 rounded-t-md relative"></div>
       {/* )} */}
 
       <div className="px-3 pb-3">
@@ -55,11 +79,11 @@ const Product = ({ name, id, price, description, image }: ProductProps) => {
         <p className="font-bold text-xl">${price}</p>
 
         {add && (
-          <div>
+          <div className="relative">
             {/* select size */}
 
             <button
-              className="bg-primary-400 w-full rounded-xl py-2 shadow-md text-white font-medium mt-4"
+              className="bg-primary-400 w-full rounded-xl py-2 shadow-md text-white font-medium mt-4 z-50"
               onClick={addNewProduct}
             >
               Agregar

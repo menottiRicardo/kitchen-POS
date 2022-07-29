@@ -1,5 +1,5 @@
 import { atom } from "recoil";
-import { Order, Product } from "../API";
+import { Order, OrderProducts, Product } from "../API";
 export type orderType = {
   name: string;
   id: number;
@@ -8,6 +8,16 @@ export type orderType = {
 export const ordersAtom = atom({
   key: "orders",
   default: [] as Order[],
+});
+
+export const OrderProducstAtom = atom({
+  key: "OrderProducstAtom",
+  default: {} as OrderProducts
+})
+
+export const ProductListAtom = atom({
+  key: "ProductListAtom",
+  default: [] as Product[]
 });
 
 export const currentOrderAtom = atom({

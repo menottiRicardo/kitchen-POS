@@ -9,11 +9,11 @@ type Order @model {
   id: ID!
   tenantId: ID!
   name: String
-  total: String
+  total: Float
   tableId: ID
   table: Table @hasOne(fields: ["tableId"])
   status: Status
-  products: [Product] @hasMany
+  products: [Product] @manyToMany(relationName: "OrderProducts")
 }
 enum Status {
   created
@@ -39,6 +39,7 @@ type Product @model {
   price: Float
   image: String
   description: String
+  orders: [Order] @manyToMany(relationName: "OrderProducts")
 }
 
 type Category @model {
