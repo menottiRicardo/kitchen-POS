@@ -28,7 +28,9 @@ const LeftMenu = ({ children }: any) => {
           <BiCog size={20} />
         </div>
       </div>
+      
       {children}
+      
     </div>
   );
 };

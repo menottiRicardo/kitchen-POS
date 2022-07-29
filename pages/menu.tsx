@@ -1,11 +1,15 @@
 import React, { ReactElement, useEffect, useState } from "react";
-import { MenuCategory } from "ui/components";
+
 import { BiFoodMenu } from "react-icons/bi";
 import Product from "../components/Product";
 import Checkout from "../components/Checkout";
 import { useSetRecoilState } from "recoil";
 import { ResProducts } from "../src/state/atoms";
 import LeftMenu from "../components/Layout/LeftMenu";
+import MenuCategory from "../components/MenuCategory";
+import { API, graphqlOperation, withSSRContext } from "aws-amplify";
+import { Category, ModelIDInput, Product as ProductType } from "../src/API";
+import { listCategories, listProducts } from "../src/graphql/queries";
 
 const getProducts = async (
   id: string,
@@ -16,28 +20,17 @@ const getProducts = async (
       return products;
 
     default:
-      const newList = products.filter((product) => product.categoryId === id);
+      const newList = products.filter((product) => product.categoryProductsId === id);
       return newList;
   }
 };
-export type ProductType = {
-  categoryId: string;
-  createdAt: string;
-  description: string;
-  flavors: string[];
-  id: string;
-  name: string;
-  qty: number;
-  sizes: any;
-  tenantId: string;
-  updatedAt: string;
-};
 
-const Table = ({ categories, products }) => {
+const Table = ({ categories, products }: any) => {
   const [selected, setSelected] = useState("999");
   const [productList, setProductsList] = useState<ProductType[]>([]);
   const setProducts = useSetRecoilState(ResProducts);
 
+  
   useEffect(() => {
     const loadProducts = async () => {
       const newProducts = await getProducts(selected, products);
@@ -49,11 +42,11 @@ const Table = ({ categories, products }) => {
 
   useEffect(() => {
     setProducts(products);
-  });
+  }, []);
   return (
-    <div className="flex relative">
-      <div className="w-3/4 bg-slate-50 relative">
-        <ul className="flex mt-2 p-4 overflow-x-auto">
+    <div className="flex w-full pl-2">
+      <div className="w-3/4 ">
+        <div className="flex mt-2 p-4 overflow-x-auto ">
           <MenuCategory
             title="Todo"
             icon={<BiFoodMenu size={"1.5em"} />}
@@ -62,9 +55,9 @@ const Table = ({ categories, products }) => {
             setSelected={setSelected}
             id="999"
           />
-          {categories.map((category: any) => (
+          {categories.map((category: Category) => (
             <MenuCategory
-              title={category.name}
+              title={category.name as string}
               icon={<BiFoodMenu size={"1.5em"} />}
               selected={selected}
               tableId={"tableId"}
@@ -73,18 +66,16 @@ const Table = ({ categories, products }) => {
               setSelected={setSelected}
             />
           ))}
-        </ul>
-        <div className="overflow-scroll w-full h-[43rem] px-2 pb-5">
-          <div className="grid grid-cols-3 gap-4">
-            {productList.map((product: any) => (
+        </div>
+        <div className="overflow-scroll h-[54rem]  w-full">
+          <div className="grid grid-cols-3">
+            {productList.map((product: ProductType) => (
               <Product
                 key={product.id}
-                // id={product.id}
-                // name={product.name}
-                // description={product.description}
-                price={product.sizes.price ?? product.sizes.S}
-                // flavors={product.flavors}
-                {...product}
+                price={product.price as number}
+                description=""
+                id={product.id}
+                name={product.name as string}
               />
             ))}
           </div>
@@ -97,26 +88,37 @@ const Table = ({ categories, products }) => {
   );
 };
 
-export async function getStaticProps() {
-  const rawCategories = await fetch(
-    "https://hqvrl2yhj3.execute-api.us-east-1.amazonaws.com/getCategories?tenantId=123"
-  );
-  const categories = await rawCategories.json();
+export async function getServerSideProps({ req }: any) {
+  const tenantId: ModelIDInput = {
+    eq: "2",
+  };
 
-  const rawProducts = await fetch(
-    "https://hqvrl2yhj3.execute-api.us-east-1.amazonaws.com/getProducts?tenantId=123&categoryId=999"
+  const SSR = withSSRContext({ req });
+
+  const rawCategory: any = await SSR.API.graphql(
+    graphqlOperation(listCategories, {
+      filter: {
+        tenantId,
+      },
+    })
   );
-  const products = await rawProducts.json();
+  const categories = await rawCategory.data.listCategories.items;
+
+  const rawProduct: any = await API.graphql(
+    graphqlOperation(listProducts, {
+      filter: {
+        tenantId,
+      },
+    })
+  );
+
+  const products = await rawProduct.data.listProducts.items;
 
   return {
     props: {
-      categories: categories.categories,
-      products: products.products,
+      categories,
+      products,
     },
-    // Next.js will attempt to re-generate the page:
-    // - When a request comes in
-    // - At most once every 10 seconds
-    revalidate: 10, // In seconds
   };
 }
 

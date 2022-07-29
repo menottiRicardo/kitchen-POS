@@ -70,7 +70,7 @@ const Tables = () => {
 
         {tables.length > 0 &&
           tables.map((table) => (
-            <div key={table.id} onClick={() => router.push("/menu")}>
+            <div key={table.id} onClick={() => router.push(`/menu?tableId=${table.id}&tableNumber=${table.number}`)}>
               <TableUi full={table.full} number={table.number} />
             </div>
           ))}

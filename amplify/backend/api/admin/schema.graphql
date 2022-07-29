@@ -12,6 +12,15 @@ type Order @model {
   total: String
   tableId: ID
   table: Table @hasOne(fields: ["tableId"])
+  status: Status
+  products: [Product] @hasMany
+}
+enum Status {
+  created
+  ordered
+  prepared
+  paid
+  cancelled
 }
 
 type Table @model {
@@ -27,7 +36,9 @@ type Product @model {
   tenantId: ID
   name: String
   category: Category @belongsTo
-  price: Int
+  price: Float
+  image: String
+  description: String
 }
 
 type Category @model {

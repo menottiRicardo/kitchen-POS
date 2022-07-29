@@ -14,7 +14,8 @@
     },
     "categories": {
       "auth": {
-        "webb613ffee": {}
+        "webb613ffee": {},
+        "true": {}
       },
       "function": {
         "webb613ffeePostConfirmation": {

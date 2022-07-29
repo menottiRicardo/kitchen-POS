@@ -24,6 +24,7 @@ export const createOrder = /* GraphQL */ `
           name
           total
           tableId
+          status
           createdAt
           updatedAt
         }
@@ -31,6 +32,7 @@ export const createOrder = /* GraphQL */ `
         updatedAt
         tableOrdersId
       }
+      status
       createdAt
       updatedAt
     }
@@ -58,6 +60,7 @@ export const updateOrder = /* GraphQL */ `
           name
           total
           tableId
+          status
           createdAt
           updatedAt
         }
@@ -65,6 +68,7 @@ export const updateOrder = /* GraphQL */ `
         updatedAt
         tableOrdersId
       }
+      status
       createdAt
       updatedAt
     }
@@ -92,6 +96,7 @@ export const deleteOrder = /* GraphQL */ `
           name
           total
           tableId
+          status
           createdAt
           updatedAt
         }
@@ -99,6 +104,7 @@ export const deleteOrder = /* GraphQL */ `
         updatedAt
         tableOrdersId
       }
+      status
       createdAt
       updatedAt
     }
@@ -129,6 +135,7 @@ export const createTable = /* GraphQL */ `
           updatedAt
           tableOrdersId
         }
+        status
         createdAt
         updatedAt
       }
@@ -163,6 +170,7 @@ export const updateTable = /* GraphQL */ `
           updatedAt
           tableOrdersId
         }
+        status
         createdAt
         updatedAt
       }
@@ -197,6 +205,7 @@ export const deleteTable = /* GraphQL */ `
           updatedAt
           tableOrdersId
         }
+        status
         createdAt
         updatedAt
       }
@@ -226,6 +235,8 @@ export const createProduct = /* GraphQL */ `
         updatedAt
       }
       price
+      image
+      description
       createdAt
       updatedAt
       categoryProductsId
@@ -252,6 +263,8 @@ export const updateProduct = /* GraphQL */ `
         updatedAt
       }
       price
+      image
+      description
       createdAt
       updatedAt
       categoryProductsId
@@ -278,6 +291,8 @@ export const deleteProduct = /* GraphQL */ `
         updatedAt
       }
       price
+      image
+      description
       createdAt
       updatedAt
       categoryProductsId
@@ -299,6 +314,8 @@ export const createCategory = /* GraphQL */ `
           tenantId
           name
           price
+          image
+          description
           createdAt
           updatedAt
           categoryProductsId
@@ -325,6 +342,8 @@ export const updateCategory = /* GraphQL */ `
           tenantId
           name
           price
+          image
+          description
           createdAt
           updatedAt
           categoryProductsId
@@ -351,6 +370,8 @@ export const deleteCategory = /* GraphQL */ `
           tenantId
           name
           price
+          image
+          description
           createdAt
           updatedAt
           categoryProductsId

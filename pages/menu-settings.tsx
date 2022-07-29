@@ -1,18 +1,18 @@
 import { API, graphqlOperation } from "aws-amplify";
 import React, { ReactElement, useEffect, useState } from "react";
 import LeftMenu from "../components/Layout/LeftMenu";
+import NewProduct from "../components/Modals/NewProduct";
+import Product from "../components/Product";
 import CategorySlider from "../components/SlideOvers/CategorySlider";
-import { Category, CreateCategoryInput, ModelIDInput } from "../src/API";
-import { createCategory } from "../src/graphql/mutations";
+import { Category, ModelIDInput, Product as ProductType } from "../src/API";
 
-import { listCategories } from "../src/graphql/queries";
+import { listCategories, listProducts } from "../src/graphql/queries";
 
 const MenuSettings = () => {
-  const [categorySelected, setCategorySelected] = useState<Category>();
   const [categories, setCategories] = useState<Category[]>([]);
+  const [products, setProducts] = useState<ProductType[]>([]);
   const [openCategorySlider, setOpenCategorySlider] = useState<boolean>(false);
-
-  
+  const [openNewProduct, setOpenNewProduct] = useState<boolean>(false);
 
   const getCategories = async () => {
     const tenantId: ModelIDInput = {
@@ -26,26 +26,41 @@ const MenuSettings = () => {
         },
       })
     );
-    console.log("af", category);
+
     setCategories(category.data.listCategories.items);
   };
 
-  const openSlider = (category: Category) => {
-    setCategorySelected(category);
-    setOpenCategorySlider(true);
+  const getProducts = async () => {
+    const tenantId: ModelIDInput = {
+      eq: "2",
+    };
+
+    const product: any = await API.graphql(
+      graphqlOperation(listProducts, {
+        filter: {
+          tenantId,
+        },
+      })
+    );
+
+    setProducts(product.data.listProducts.items);
   };
 
   useEffect(() => {
     getCategories();
+    getProducts();
   }, []);
 
-  console.log("cate", categories);
   return (
     <div className="p-4">
       <CategorySlider
         open={openCategorySlider}
         setOpen={setOpenCategorySlider}
-        
+      />
+      <NewProduct
+        open={openNewProduct}
+        setOpen={setOpenNewProduct}
+        categories={categories}
       />
       {/* categories */}
       <div className="flex">
@@ -58,20 +73,34 @@ const MenuSettings = () => {
 
         {categories.length > 0 &&
           categories.map((category) => (
-            <div>
-              <div
-                className={`flex flex-col justify-center items-center rounded-md p-4 bg-primary-300 shadow-sm text-gray-100 border-2 border-gray-100 mx-2 w-20 h-20 text-xl`}
-              >
-                {category.name}
-              </div>
+            <div
+              key={category.id}
+              className={`flex flex-col justify-center items-center rounded-md p-4 bg-primary-300 shadow-sm text-gray-100 border-2 border-gray-100 mx-2 w-20 h-20 text-xl`}
+            >
+              {category.name}
             </div>
           ))}
       </div>
 
       {/* products */}
-      <div className="mt-10">
-        <div className="bg-white shadow-md rounded-md w-56 h-72 flex items-center justify-center text-4xl border-dashed border-2 mx-2">
-          +
+      <div className="mt-10 flex">
+        <div className="grid grid-cols-4">
+          <div
+            className="bg-gray-300 text-gray-500 shadow-md rounded-md w-56 h-44 flex items-center justify-center text-4xl border-dashed border-2 mx-2"
+            onClick={() => setOpenNewProduct(true)}
+          >
+            +
+          </div>
+
+          {products.length > 0 &&
+            products.map((prod) => (
+              <Product
+                name={prod.name as string}
+                id={prod.id}
+                price={prod.price as number}
+                description=""
+              />
+            ))}
         </div>
       </div>
     </div>

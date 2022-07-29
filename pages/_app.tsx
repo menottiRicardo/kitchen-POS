@@ -7,7 +7,7 @@ import Amplify from "aws-amplify";
 import config from "../src/aws-exports";
 import { NextPage } from "next";
 import { ReactElement, ReactNode } from "react";
-Amplify.configure(config);
+Amplify.configure({ ...config, srr: true });
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -20,11 +20,9 @@ type AppPropsWithLayout = AppProps & {
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => page);
   return (
-    <Authenticator signUpAttributes={['zoneinfo']}>
+    <Authenticator signUpAttributes={["zoneinfo"]}>
       {({ signOut, user }) => (
-        <RecoilRoot>
-          {getLayout(<Component {...pageProps} />)}
-        </RecoilRoot>
+        <RecoilRoot>{getLayout(<Component {...pageProps} />)}</RecoilRoot>
       )}
     </Authenticator>
   );

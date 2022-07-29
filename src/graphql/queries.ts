@@ -21,6 +21,7 @@ export const getOrder = /* GraphQL */ `
           name
           total
           tableId
+          status
           createdAt
           updatedAt
         }
@@ -28,6 +29,7 @@ export const getOrder = /* GraphQL */ `
         updatedAt
         tableOrdersId
       }
+      status
       createdAt
       updatedAt
     }
@@ -55,6 +57,7 @@ export const listOrders = /* GraphQL */ `
           updatedAt
           tableOrdersId
         }
+        status
         createdAt
         updatedAt
       }
@@ -84,6 +87,7 @@ export const getTable = /* GraphQL */ `
           updatedAt
           tableOrdersId
         }
+        status
         createdAt
         updatedAt
       }
@@ -111,6 +115,7 @@ export const listTables = /* GraphQL */ `
           name
           total
           tableId
+          status
           createdAt
           updatedAt
         }
@@ -139,6 +144,8 @@ export const getProduct = /* GraphQL */ `
         updatedAt
       }
       price
+      image
+      description
       createdAt
       updatedAt
       categoryProductsId
@@ -164,6 +171,8 @@ export const listProducts = /* GraphQL */ `
           updatedAt
         }
         price
+        image
+        description
         createdAt
         updatedAt
         categoryProductsId
@@ -184,6 +193,8 @@ export const getCategory = /* GraphQL */ `
           tenantId
           name
           price
+          image
+          description
           createdAt
           updatedAt
           categoryProductsId
