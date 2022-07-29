@@ -30,7 +30,6 @@ export const createOrder = /* GraphQL */ `
         createdAt
         updatedAt
         tableOrdersId
-        tableOrdersTenantId
       }
       createdAt
       updatedAt
@@ -65,7 +64,6 @@ export const updateOrder = /* GraphQL */ `
         createdAt
         updatedAt
         tableOrdersId
-        tableOrdersTenantId
       }
       createdAt
       updatedAt
@@ -100,7 +98,6 @@ export const deleteOrder = /* GraphQL */ `
         createdAt
         updatedAt
         tableOrdersId
-        tableOrdersTenantId
       }
       createdAt
       updatedAt
@@ -131,7 +128,6 @@ export const createTable = /* GraphQL */ `
           createdAt
           updatedAt
           tableOrdersId
-          tableOrdersTenantId
         }
         createdAt
         updatedAt
@@ -139,7 +135,6 @@ export const createTable = /* GraphQL */ `
       createdAt
       updatedAt
       tableOrdersId
-      tableOrdersTenantId
     }
   }
 `;
@@ -167,7 +162,6 @@ export const updateTable = /* GraphQL */ `
           createdAt
           updatedAt
           tableOrdersId
-          tableOrdersTenantId
         }
         createdAt
         updatedAt
@@ -175,7 +169,6 @@ export const updateTable = /* GraphQL */ `
       createdAt
       updatedAt
       tableOrdersId
-      tableOrdersTenantId
     }
   }
 `;
@@ -203,7 +196,6 @@ export const deleteTable = /* GraphQL */ `
           createdAt
           updatedAt
           tableOrdersId
-          tableOrdersTenantId
         }
         createdAt
         updatedAt
@@ -211,7 +203,6 @@ export const deleteTable = /* GraphQL */ `
       createdAt
       updatedAt
       tableOrdersId
-      tableOrdersTenantId
     }
   }
 `;
@@ -224,8 +215,20 @@ export const createProduct = /* GraphQL */ `
       id
       tenantId
       name
+      category {
+        id
+        tenantId
+        name
+        products {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      price
       createdAt
       updatedAt
+      categoryProductsId
     }
   }
 `;
@@ -238,8 +241,20 @@ export const updateProduct = /* GraphQL */ `
       id
       tenantId
       name
+      category {
+        id
+        tenantId
+        name
+        products {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      price
       createdAt
       updatedAt
+      categoryProductsId
     }
   }
 `;
@@ -252,6 +267,96 @@ export const deleteProduct = /* GraphQL */ `
       id
       tenantId
       name
+      category {
+        id
+        tenantId
+        name
+        products {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      price
+      createdAt
+      updatedAt
+      categoryProductsId
+    }
+  }
+`;
+export const createCategory = /* GraphQL */ `
+  mutation CreateCategory(
+    $input: CreateCategoryInput!
+    $condition: ModelCategoryConditionInput
+  ) {
+    createCategory(input: $input, condition: $condition) {
+      id
+      tenantId
+      name
+      products {
+        items {
+          id
+          tenantId
+          name
+          price
+          createdAt
+          updatedAt
+          categoryProductsId
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateCategory = /* GraphQL */ `
+  mutation UpdateCategory(
+    $input: UpdateCategoryInput!
+    $condition: ModelCategoryConditionInput
+  ) {
+    updateCategory(input: $input, condition: $condition) {
+      id
+      tenantId
+      name
+      products {
+        items {
+          id
+          tenantId
+          name
+          price
+          createdAt
+          updatedAt
+          categoryProductsId
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteCategory = /* GraphQL */ `
+  mutation DeleteCategory(
+    $input: DeleteCategoryInput!
+    $condition: ModelCategoryConditionInput
+  ) {
+    deleteCategory(input: $input, condition: $condition) {
+      id
+      tenantId
+      name
+      products {
+        items {
+          id
+          tenantId
+          name
+          price
+          createdAt
+          updatedAt
+          categoryProductsId
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }

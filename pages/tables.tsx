@@ -4,7 +4,6 @@ import {
   CreateTableInput,
   ListTablesQuery,
   ModelIDInput,
-  ModelIDKeyConditionInput,
   Table,
 } from "../src/API";
 import { createTable } from "../src/graphql/mutations";
@@ -69,11 +68,12 @@ const Tables = () => {
           </p>
         </div>
 
-        {tables.map((table) => (
-          <div key={table.id} onClick={() => router.push("/menu")}>
-            <TableUi full={table.full} number={table.number} />
-          </div>
-        ))}
+        {tables.length > 0 &&
+          tables.map((table) => (
+            <div key={table.id} onClick={() => router.push("/menu")}>
+              <TableUi full={table.full} number={table.number} />
+            </div>
+          ))}
       </div>
     </div>
   );

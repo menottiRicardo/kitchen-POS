@@ -1,6 +1,6 @@
 interface TableProps {
-  full: boolean;
-  number: number;
+  full: boolean | null | undefined;
+  number: number | null | undefined;
 }
 
 const TableUi = ({ full, number }: TableProps) => {

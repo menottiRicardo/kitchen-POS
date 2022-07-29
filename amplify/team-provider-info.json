@@ -18,7 +18,6 @@
       },
       "function": {
         "webb613ffeePostConfirmation": {
-          "GROUP": "test",
           "deploymentBucketName": "amplify-web-dev-161326-deployment",
           "s3Key": "amplify-builds/webb613ffeePostConfirmation-45507269356b344c4554-build.zip"
         }

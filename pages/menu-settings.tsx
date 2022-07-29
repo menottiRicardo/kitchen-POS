@@ -1,25 +1,18 @@
 import { API, graphqlOperation } from "aws-amplify";
 import React, { ReactElement, useEffect, useState } from "react";
 import LeftMenu from "../components/Layout/LeftMenu";
-import {
-  ModelIDInput,
-  ModelIDKeyConditionInput,
-  CreateCategoryInput,
-} from "../src/API";
+import CategorySlider from "../components/SlideOvers/CategorySlider";
+import { Category, CreateCategoryInput, ModelIDInput } from "../src/API";
+import { createCategory } from "../src/graphql/mutations";
 
 import { listCategories } from "../src/graphql/queries";
 
 const MenuSettings = () => {
-  const [selected, setSelected] = useState("");
-  const [categories, setCategories] = useState<any>([]);
+  const [categorySelected, setCategorySelected] = useState<Category>();
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [openCategorySlider, setOpenCategorySlider] = useState<boolean>(false);
 
-  const createCategory = async () => {
-    const newTable: CreateCategoryInput = {
-      full: false,
-      number: categories.length + 1,
-      tenantId: "2",
-    };
-  };
+  
 
   const getCategories = async () => {
     const tenantId: ModelIDInput = {
@@ -33,23 +26,46 @@ const MenuSettings = () => {
         },
       })
     );
+    console.log("af", category);
     setCategories(category.data.listCategories.items);
+  };
+
+  const openSlider = (category: Category) => {
+    setCategorySelected(category);
+    setOpenCategorySlider(true);
   };
 
   useEffect(() => {
     getCategories();
   }, []);
 
+  console.log("cate", categories);
   return (
     <div className="p-4">
+      <CategorySlider
+        open={openCategorySlider}
+        setOpen={setOpenCategorySlider}
+        
+      />
       {/* categories */}
-      <div>
+      <div className="flex">
         <div
           className={`flex flex-col justify-center items-center rounded-md p-4 bg-gray-300 shadow-sm text-gray-500 border-2 border-gray-100 mx-2 w-20 h-20 border-dashed text-xl`}
-          onClick={createCategory}
+          onClick={() => setOpenCategorySlider(true)}
         >
           +
         </div>
+
+        {categories.length > 0 &&
+          categories.map((category) => (
+            <div>
+              <div
+                className={`flex flex-col justify-center items-center rounded-md p-4 bg-primary-300 shadow-sm text-gray-100 border-2 border-gray-100 mx-2 w-20 h-20 text-xl`}
+              >
+                {category.name}
+              </div>
+            </div>
+          ))}
       </div>
 
       {/* products */}

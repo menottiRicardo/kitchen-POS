@@ -3,8 +3,8 @@
 // this is an auto generated file. This will be overwritten
 
 export const getOrder = /* GraphQL */ `
-  query GetOrder($id: ID!, $tenantId: ID!) {
-    getOrder(id: $id, tenantId: $tenantId) {
+  query GetOrder($id: ID!) {
+    getOrder(id: $id) {
       id
       tenantId
       name
@@ -27,7 +27,6 @@ export const getOrder = /* GraphQL */ `
         createdAt
         updatedAt
         tableOrdersId
-        tableOrdersTenantId
       }
       createdAt
       updatedAt
@@ -36,21 +35,11 @@ export const getOrder = /* GraphQL */ `
 `;
 export const listOrders = /* GraphQL */ `
   query ListOrders(
-    $id: ID
-    $tenantId: ModelIDKeyConditionInput
     $filter: ModelOrderFilterInput
     $limit: Int
     $nextToken: String
-    $sortDirection: ModelSortDirection
   ) {
-    listOrders(
-      id: $id
-      tenantId: $tenantId
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      sortDirection: $sortDirection
-    ) {
+    listOrders(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
         tenantId
@@ -65,7 +54,6 @@ export const listOrders = /* GraphQL */ `
           createdAt
           updatedAt
           tableOrdersId
-          tableOrdersTenantId
         }
         createdAt
         updatedAt
@@ -75,8 +63,8 @@ export const listOrders = /* GraphQL */ `
   }
 `;
 export const getTable = /* GraphQL */ `
-  query GetTable($id: ID!, $tenantId: ID!) {
-    getTable(id: $id, tenantId: $tenantId) {
+  query GetTable($id: ID!) {
+    getTable(id: $id) {
       id
       tenantId
       full
@@ -95,7 +83,6 @@ export const getTable = /* GraphQL */ `
           createdAt
           updatedAt
           tableOrdersId
-          tableOrdersTenantId
         }
         createdAt
         updatedAt
@@ -103,27 +90,16 @@ export const getTable = /* GraphQL */ `
       createdAt
       updatedAt
       tableOrdersId
-      tableOrdersTenantId
     }
   }
 `;
 export const listTables = /* GraphQL */ `
   query ListTables(
-    $id: ID
-    $tenantId: ModelIDKeyConditionInput
     $filter: ModelTableFilterInput
     $limit: Int
     $nextToken: String
-    $sortDirection: ModelSortDirection
   ) {
-    listTables(
-      id: $id
-      tenantId: $tenantId
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      sortDirection: $sortDirection
-    ) {
+    listTables(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
         tenantId
@@ -141,44 +117,98 @@ export const listTables = /* GraphQL */ `
         createdAt
         updatedAt
         tableOrdersId
-        tableOrdersTenantId
       }
       nextToken
     }
   }
 `;
 export const getProduct = /* GraphQL */ `
-  query GetProduct($id: ID!, $tenantId: ID!) {
-    getProduct(id: $id, tenantId: $tenantId) {
+  query GetProduct($id: ID!) {
+    getProduct(id: $id) {
       id
       tenantId
       name
+      category {
+        id
+        tenantId
+        name
+        products {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      price
       createdAt
       updatedAt
+      categoryProductsId
     }
   }
 `;
 export const listProducts = /* GraphQL */ `
   query ListProducts(
-    $id: ID
-    $tenantId: ModelIDKeyConditionInput
     $filter: ModelProductFilterInput
     $limit: Int
     $nextToken: String
-    $sortDirection: ModelSortDirection
   ) {
-    listProducts(
-      id: $id
-      tenantId: $tenantId
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      sortDirection: $sortDirection
-    ) {
+    listProducts(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
         tenantId
         name
+        category {
+          id
+          tenantId
+          name
+          createdAt
+          updatedAt
+        }
+        price
+        createdAt
+        updatedAt
+        categoryProductsId
+      }
+      nextToken
+    }
+  }
+`;
+export const getCategory = /* GraphQL */ `
+  query GetCategory($id: ID!) {
+    getCategory(id: $id) {
+      id
+      tenantId
+      name
+      products {
+        items {
+          id
+          tenantId
+          name
+          price
+          createdAt
+          updatedAt
+          categoryProductsId
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listCategories = /* GraphQL */ `
+  query ListCategories(
+    $filter: ModelCategoryFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listCategories(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        tenantId
+        name
+        products {
+          nextToken
+        }
         createdAt
         updatedAt
       }

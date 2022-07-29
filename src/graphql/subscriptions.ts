@@ -27,7 +27,6 @@ export const onCreateOrder = /* GraphQL */ `
         createdAt
         updatedAt
         tableOrdersId
-        tableOrdersTenantId
       }
       createdAt
       updatedAt
@@ -59,7 +58,6 @@ export const onUpdateOrder = /* GraphQL */ `
         createdAt
         updatedAt
         tableOrdersId
-        tableOrdersTenantId
       }
       createdAt
       updatedAt
@@ -91,7 +89,6 @@ export const onDeleteOrder = /* GraphQL */ `
         createdAt
         updatedAt
         tableOrdersId
-        tableOrdersTenantId
       }
       createdAt
       updatedAt
@@ -119,7 +116,6 @@ export const onCreateTable = /* GraphQL */ `
           createdAt
           updatedAt
           tableOrdersId
-          tableOrdersTenantId
         }
         createdAt
         updatedAt
@@ -127,7 +123,6 @@ export const onCreateTable = /* GraphQL */ `
       createdAt
       updatedAt
       tableOrdersId
-      tableOrdersTenantId
     }
   }
 `;
@@ -152,7 +147,6 @@ export const onUpdateTable = /* GraphQL */ `
           createdAt
           updatedAt
           tableOrdersId
-          tableOrdersTenantId
         }
         createdAt
         updatedAt
@@ -160,7 +154,6 @@ export const onUpdateTable = /* GraphQL */ `
       createdAt
       updatedAt
       tableOrdersId
-      tableOrdersTenantId
     }
   }
 `;
@@ -185,7 +178,6 @@ export const onDeleteTable = /* GraphQL */ `
           createdAt
           updatedAt
           tableOrdersId
-          tableOrdersTenantId
         }
         createdAt
         updatedAt
@@ -193,7 +185,6 @@ export const onDeleteTable = /* GraphQL */ `
       createdAt
       updatedAt
       tableOrdersId
-      tableOrdersTenantId
     }
   }
 `;
@@ -203,8 +194,20 @@ export const onCreateProduct = /* GraphQL */ `
       id
       tenantId
       name
+      category {
+        id
+        tenantId
+        name
+        products {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      price
       createdAt
       updatedAt
+      categoryProductsId
     }
   }
 `;
@@ -214,8 +217,20 @@ export const onUpdateProduct = /* GraphQL */ `
       id
       tenantId
       name
+      category {
+        id
+        tenantId
+        name
+        products {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      price
       createdAt
       updatedAt
+      categoryProductsId
     }
   }
 `;
@@ -225,6 +240,87 @@ export const onDeleteProduct = /* GraphQL */ `
       id
       tenantId
       name
+      category {
+        id
+        tenantId
+        name
+        products {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      price
+      createdAt
+      updatedAt
+      categoryProductsId
+    }
+  }
+`;
+export const onCreateCategory = /* GraphQL */ `
+  subscription OnCreateCategory {
+    onCreateCategory {
+      id
+      tenantId
+      name
+      products {
+        items {
+          id
+          tenantId
+          name
+          price
+          createdAt
+          updatedAt
+          categoryProductsId
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateCategory = /* GraphQL */ `
+  subscription OnUpdateCategory {
+    onUpdateCategory {
+      id
+      tenantId
+      name
+      products {
+        items {
+          id
+          tenantId
+          name
+          price
+          createdAt
+          updatedAt
+          categoryProductsId
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteCategory = /* GraphQL */ `
+  subscription OnDeleteCategory {
+    onDeleteCategory {
+      id
+      tenantId
+      name
+      products {
+        items {
+          id
+          tenantId
+          name
+          price
+          createdAt
+          updatedAt
+          categoryProductsId
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }

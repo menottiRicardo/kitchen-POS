@@ -11,6 +11,7 @@ export type CreateOrderInput = {
 };
 
 export type ModelOrderConditionInput = {
+  tenantId?: ModelIDInput | null,
   name?: ModelStringInput | null,
   total?: ModelStringInput | null,
   tableId?: ModelIDInput | null,
@@ -19,7 +20,7 @@ export type ModelOrderConditionInput = {
   not?: ModelOrderConditionInput | null,
 };
 
-export type ModelStringInput = {
+export type ModelIDInput = {
   ne?: string | null,
   eq?: string | null,
   le?: string | null,
@@ -59,7 +60,7 @@ export type ModelSizeInput = {
   between?: Array< number | null > | null,
 };
 
-export type ModelIDInput = {
+export type ModelStringInput = {
   ne?: string | null,
   eq?: string | null,
   le?: string | null,
@@ -90,19 +91,18 @@ export type Order = {
 export type Table = {
   __typename: "Table",
   id: string,
-  tenantId: string,
+  tenantId?: string | null,
   full?: boolean | null,
   number?: number | null,
   orders?: Order | null,
   createdAt: string,
   updatedAt: string,
   tableOrdersId?: string | null,
-  tableOrdersTenantId?: string | null,
 };
 
 export type UpdateOrderInput = {
   id: string,
-  tenantId: string,
+  tenantId?: string | null,
   name?: string | null,
   total?: string | null,
   tableId?: string | null,
@@ -110,26 +110,24 @@ export type UpdateOrderInput = {
 
 export type DeleteOrderInput = {
   id: string,
-  tenantId: string,
 };
 
 export type CreateTableInput = {
   id?: string | null,
-  tenantId: string,
+  tenantId?: string | null,
   full?: boolean | null,
   number?: number | null,
   tableOrdersId?: string | null,
-  tableOrdersTenantId?: string | null,
 };
 
 export type ModelTableConditionInput = {
+  tenantId?: ModelIDInput | null,
   full?: ModelBooleanInput | null,
   number?: ModelIntInput | null,
   and?: Array< ModelTableConditionInput | null > | null,
   or?: Array< ModelTableConditionInput | null > | null,
   not?: ModelTableConditionInput | null,
   tableOrdersId?: ModelIDInput | null,
-  tableOrdersTenantId?: ModelIDInput | null,
 };
 
 export type ModelBooleanInput = {
@@ -153,59 +151,96 @@ export type ModelIntInput = {
 
 export type UpdateTableInput = {
   id: string,
-  tenantId: string,
+  tenantId?: string | null,
   full?: boolean | null,
   number?: number | null,
   tableOrdersId?: string | null,
-  tableOrdersTenantId?: string | null,
 };
 
 export type DeleteTableInput = {
   id: string,
-  tenantId: string,
 };
 
 export type CreateProductInput = {
   id?: string | null,
-  tenantId: string,
+  tenantId?: string | null,
   name?: string | null,
+  price?: number | null,
+  categoryProductsId?: string | null,
 };
 
 export type ModelProductConditionInput = {
+  tenantId?: ModelIDInput | null,
   name?: ModelStringInput | null,
+  price?: ModelIntInput | null,
   and?: Array< ModelProductConditionInput | null > | null,
   or?: Array< ModelProductConditionInput | null > | null,
   not?: ModelProductConditionInput | null,
+  categoryProductsId?: ModelIDInput | null,
 };
 
 export type Product = {
   __typename: "Product",
   id: string,
-  tenantId: string,
+  tenantId?: string | null,
   name?: string | null,
+  category?: Category | null,
+  price?: number | null,
+  createdAt: string,
+  updatedAt: string,
+  categoryProductsId?: string | null,
+};
+
+export type Category = {
+  __typename: "Category",
+  id: string,
+  tenantId?: string | null,
+  name?: string | null,
+  products?: ModelProductConnection | null,
   createdAt: string,
   updatedAt: string,
 };
 
+export type ModelProductConnection = {
+  __typename: "ModelProductConnection",
+  items:  Array<Product | null >,
+  nextToken?: string | null,
+};
+
 export type UpdateProductInput = {
   id: string,
-  tenantId: string,
+  tenantId?: string | null,
   name?: string | null,
+  price?: number | null,
+  categoryProductsId?: string | null,
 };
 
 export type DeleteProductInput = {
   id: string,
-  tenantId: string,
 };
 
-export type ModelIDKeyConditionInput = {
-  eq?: string | null,
-  le?: string | null,
-  lt?: string | null,
-  ge?: string | null,
-  gt?: string | null,
-  between?: Array< string | null > | null,
-  beginsWith?: string | null,
+export type CreateCategoryInput = {
+  id?: string | null,
+  tenantId?: string | null,
+  name?: string | null,
+};
+
+export type ModelCategoryConditionInput = {
+  tenantId?: ModelIDInput | null,
+  name?: ModelStringInput | null,
+  and?: Array< ModelCategoryConditionInput | null > | null,
+  or?: Array< ModelCategoryConditionInput | null > | null,
+  not?: ModelCategoryConditionInput | null,
+};
+
+export type UpdateCategoryInput = {
+  id: string,
+  tenantId?: string | null,
+  name?: string | null,
+};
+
+export type DeleteCategoryInput = {
+  id: string,
 };
 
 export type ModelOrderFilterInput = {
@@ -218,12 +253,6 @@ export type ModelOrderFilterInput = {
   or?: Array< ModelOrderFilterInput | null > | null,
   not?: ModelOrderFilterInput | null,
 };
-
-export enum ModelSortDirection {
-  ASC = "ASC",
-  DESC = "DESC",
-}
-
 
 export type ModelOrderConnection = {
   __typename: "ModelOrderConnection",
@@ -240,7 +269,6 @@ export type ModelTableFilterInput = {
   or?: Array< ModelTableFilterInput | null > | null,
   not?: ModelTableFilterInput | null,
   tableOrdersId?: ModelIDInput | null,
-  tableOrdersTenantId?: ModelIDInput | null,
 };
 
 export type ModelTableConnection = {
@@ -253,14 +281,25 @@ export type ModelProductFilterInput = {
   id?: ModelIDInput | null,
   tenantId?: ModelIDInput | null,
   name?: ModelStringInput | null,
+  price?: ModelIntInput | null,
   and?: Array< ModelProductFilterInput | null > | null,
   or?: Array< ModelProductFilterInput | null > | null,
   not?: ModelProductFilterInput | null,
+  categoryProductsId?: ModelIDInput | null,
 };
 
-export type ModelProductConnection = {
-  __typename: "ModelProductConnection",
-  items:  Array<Product | null >,
+export type ModelCategoryFilterInput = {
+  id?: ModelIDInput | null,
+  tenantId?: ModelIDInput | null,
+  name?: ModelStringInput | null,
+  and?: Array< ModelCategoryFilterInput | null > | null,
+  or?: Array< ModelCategoryFilterInput | null > | null,
+  not?: ModelCategoryFilterInput | null,
+};
+
+export type ModelCategoryConnection = {
+  __typename: "ModelCategoryConnection",
+  items:  Array<Category | null >,
   nextToken?: string | null,
 };
 
@@ -280,7 +319,7 @@ export type CreateOrderMutation = {
     table?:  {
       __typename: "Table",
       id: string,
-      tenantId: string,
+      tenantId?: string | null,
       full?: boolean | null,
       number?: number | null,
       orders?:  {
@@ -296,7 +335,6 @@ export type CreateOrderMutation = {
       createdAt: string,
       updatedAt: string,
       tableOrdersId?: string | null,
-      tableOrdersTenantId?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -319,7 +357,7 @@ export type UpdateOrderMutation = {
     table?:  {
       __typename: "Table",
       id: string,
-      tenantId: string,
+      tenantId?: string | null,
       full?: boolean | null,
       number?: number | null,
       orders?:  {
@@ -335,7 +373,6 @@ export type UpdateOrderMutation = {
       createdAt: string,
       updatedAt: string,
       tableOrdersId?: string | null,
-      tableOrdersTenantId?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -358,7 +395,7 @@ export type DeleteOrderMutation = {
     table?:  {
       __typename: "Table",
       id: string,
-      tenantId: string,
+      tenantId?: string | null,
       full?: boolean | null,
       number?: number | null,
       orders?:  {
@@ -374,7 +411,6 @@ export type DeleteOrderMutation = {
       createdAt: string,
       updatedAt: string,
       tableOrdersId?: string | null,
-      tableOrdersTenantId?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -390,7 +426,7 @@ export type CreateTableMutation = {
   createTable?:  {
     __typename: "Table",
     id: string,
-    tenantId: string,
+    tenantId?: string | null,
     full?: boolean | null,
     number?: number | null,
     orders?:  {
@@ -403,13 +439,12 @@ export type CreateTableMutation = {
       table?:  {
         __typename: "Table",
         id: string,
-        tenantId: string,
+        tenantId?: string | null,
         full?: boolean | null,
         number?: number | null,
         createdAt: string,
         updatedAt: string,
         tableOrdersId?: string | null,
-        tableOrdersTenantId?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
@@ -417,7 +452,6 @@ export type CreateTableMutation = {
     createdAt: string,
     updatedAt: string,
     tableOrdersId?: string | null,
-    tableOrdersTenantId?: string | null,
   } | null,
 };
 
@@ -430,7 +464,7 @@ export type UpdateTableMutation = {
   updateTable?:  {
     __typename: "Table",
     id: string,
-    tenantId: string,
+    tenantId?: string | null,
     full?: boolean | null,
     number?: number | null,
     orders?:  {
@@ -443,13 +477,12 @@ export type UpdateTableMutation = {
       table?:  {
         __typename: "Table",
         id: string,
-        tenantId: string,
+        tenantId?: string | null,
         full?: boolean | null,
         number?: number | null,
         createdAt: string,
         updatedAt: string,
         tableOrdersId?: string | null,
-        tableOrdersTenantId?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
@@ -457,7 +490,6 @@ export type UpdateTableMutation = {
     createdAt: string,
     updatedAt: string,
     tableOrdersId?: string | null,
-    tableOrdersTenantId?: string | null,
   } | null,
 };
 
@@ -470,7 +502,7 @@ export type DeleteTableMutation = {
   deleteTable?:  {
     __typename: "Table",
     id: string,
-    tenantId: string,
+    tenantId?: string | null,
     full?: boolean | null,
     number?: number | null,
     orders?:  {
@@ -483,13 +515,12 @@ export type DeleteTableMutation = {
       table?:  {
         __typename: "Table",
         id: string,
-        tenantId: string,
+        tenantId?: string | null,
         full?: boolean | null,
         number?: number | null,
         createdAt: string,
         updatedAt: string,
         tableOrdersId?: string | null,
-        tableOrdersTenantId?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
@@ -497,7 +528,6 @@ export type DeleteTableMutation = {
     createdAt: string,
     updatedAt: string,
     tableOrdersId?: string | null,
-    tableOrdersTenantId?: string | null,
   } | null,
 };
 
@@ -510,10 +540,24 @@ export type CreateProductMutation = {
   createProduct?:  {
     __typename: "Product",
     id: string,
-    tenantId: string,
+    tenantId?: string | null,
     name?: string | null,
+    category?:  {
+      __typename: "Category",
+      id: string,
+      tenantId?: string | null,
+      name?: string | null,
+      products?:  {
+        __typename: "ModelProductConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    price?: number | null,
     createdAt: string,
     updatedAt: string,
+    categoryProductsId?: string | null,
   } | null,
 };
 
@@ -526,10 +570,24 @@ export type UpdateProductMutation = {
   updateProduct?:  {
     __typename: "Product",
     id: string,
-    tenantId: string,
+    tenantId?: string | null,
     name?: string | null,
+    category?:  {
+      __typename: "Category",
+      id: string,
+      tenantId?: string | null,
+      name?: string | null,
+      products?:  {
+        __typename: "ModelProductConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    price?: number | null,
     createdAt: string,
     updatedAt: string,
+    categoryProductsId?: string | null,
   } | null,
 };
 
@@ -542,8 +600,112 @@ export type DeleteProductMutation = {
   deleteProduct?:  {
     __typename: "Product",
     id: string,
-    tenantId: string,
+    tenantId?: string | null,
     name?: string | null,
+    category?:  {
+      __typename: "Category",
+      id: string,
+      tenantId?: string | null,
+      name?: string | null,
+      products?:  {
+        __typename: "ModelProductConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    price?: number | null,
+    createdAt: string,
+    updatedAt: string,
+    categoryProductsId?: string | null,
+  } | null,
+};
+
+export type CreateCategoryMutationVariables = {
+  input: CreateCategoryInput,
+  condition?: ModelCategoryConditionInput | null,
+};
+
+export type CreateCategoryMutation = {
+  createCategory?:  {
+    __typename: "Category",
+    id: string,
+    tenantId?: string | null,
+    name?: string | null,
+    products?:  {
+      __typename: "ModelProductConnection",
+      items:  Array< {
+        __typename: "Product",
+        id: string,
+        tenantId?: string | null,
+        name?: string | null,
+        price?: number | null,
+        createdAt: string,
+        updatedAt: string,
+        categoryProductsId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateCategoryMutationVariables = {
+  input: UpdateCategoryInput,
+  condition?: ModelCategoryConditionInput | null,
+};
+
+export type UpdateCategoryMutation = {
+  updateCategory?:  {
+    __typename: "Category",
+    id: string,
+    tenantId?: string | null,
+    name?: string | null,
+    products?:  {
+      __typename: "ModelProductConnection",
+      items:  Array< {
+        __typename: "Product",
+        id: string,
+        tenantId?: string | null,
+        name?: string | null,
+        price?: number | null,
+        createdAt: string,
+        updatedAt: string,
+        categoryProductsId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteCategoryMutationVariables = {
+  input: DeleteCategoryInput,
+  condition?: ModelCategoryConditionInput | null,
+};
+
+export type DeleteCategoryMutation = {
+  deleteCategory?:  {
+    __typename: "Category",
+    id: string,
+    tenantId?: string | null,
+    name?: string | null,
+    products?:  {
+      __typename: "ModelProductConnection",
+      items:  Array< {
+        __typename: "Product",
+        id: string,
+        tenantId?: string | null,
+        name?: string | null,
+        price?: number | null,
+        createdAt: string,
+        updatedAt: string,
+        categoryProductsId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -551,7 +713,6 @@ export type DeleteProductMutation = {
 
 export type GetOrderQueryVariables = {
   id: string,
-  tenantId: string,
 };
 
 export type GetOrderQuery = {
@@ -565,7 +726,7 @@ export type GetOrderQuery = {
     table?:  {
       __typename: "Table",
       id: string,
-      tenantId: string,
+      tenantId?: string | null,
       full?: boolean | null,
       number?: number | null,
       orders?:  {
@@ -581,7 +742,6 @@ export type GetOrderQuery = {
       createdAt: string,
       updatedAt: string,
       tableOrdersId?: string | null,
-      tableOrdersTenantId?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -589,12 +749,9 @@ export type GetOrderQuery = {
 };
 
 export type ListOrdersQueryVariables = {
-  id?: string | null,
-  tenantId?: ModelIDKeyConditionInput | null,
   filter?: ModelOrderFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
-  sortDirection?: ModelSortDirection | null,
 };
 
 export type ListOrdersQuery = {
@@ -610,13 +767,12 @@ export type ListOrdersQuery = {
       table?:  {
         __typename: "Table",
         id: string,
-        tenantId: string,
+        tenantId?: string | null,
         full?: boolean | null,
         number?: number | null,
         createdAt: string,
         updatedAt: string,
         tableOrdersId?: string | null,
-        tableOrdersTenantId?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
@@ -627,14 +783,13 @@ export type ListOrdersQuery = {
 
 export type GetTableQueryVariables = {
   id: string,
-  tenantId: string,
 };
 
 export type GetTableQuery = {
   getTable?:  {
     __typename: "Table",
     id: string,
-    tenantId: string,
+    tenantId?: string | null,
     full?: boolean | null,
     number?: number | null,
     orders?:  {
@@ -647,13 +802,12 @@ export type GetTableQuery = {
       table?:  {
         __typename: "Table",
         id: string,
-        tenantId: string,
+        tenantId?: string | null,
         full?: boolean | null,
         number?: number | null,
         createdAt: string,
         updatedAt: string,
         tableOrdersId?: string | null,
-        tableOrdersTenantId?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
@@ -661,17 +815,13 @@ export type GetTableQuery = {
     createdAt: string,
     updatedAt: string,
     tableOrdersId?: string | null,
-    tableOrdersTenantId?: string | null,
   } | null,
 };
 
 export type ListTablesQueryVariables = {
-  id?: string | null,
-  tenantId?: ModelIDKeyConditionInput | null,
   filter?: ModelTableFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
-  sortDirection?: ModelSortDirection | null,
 };
 
 export type ListTablesQuery = {
@@ -680,7 +830,7 @@ export type ListTablesQuery = {
     items:  Array< {
       __typename: "Table",
       id: string,
-      tenantId: string,
+      tenantId?: string | null,
       full?: boolean | null,
       number?: number | null,
       orders?:  {
@@ -696,7 +846,6 @@ export type ListTablesQuery = {
       createdAt: string,
       updatedAt: string,
       tableOrdersId?: string | null,
-      tableOrdersTenantId?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -704,27 +853,37 @@ export type ListTablesQuery = {
 
 export type GetProductQueryVariables = {
   id: string,
-  tenantId: string,
 };
 
 export type GetProductQuery = {
   getProduct?:  {
     __typename: "Product",
     id: string,
-    tenantId: string,
+    tenantId?: string | null,
     name?: string | null,
+    category?:  {
+      __typename: "Category",
+      id: string,
+      tenantId?: string | null,
+      name?: string | null,
+      products?:  {
+        __typename: "ModelProductConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    price?: number | null,
     createdAt: string,
     updatedAt: string,
+    categoryProductsId?: string | null,
   } | null,
 };
 
 export type ListProductsQueryVariables = {
-  id?: string | null,
-  tenantId?: ModelIDKeyConditionInput | null,
   filter?: ModelProductFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
-  sortDirection?: ModelSortDirection | null,
 };
 
 export type ListProductsQuery = {
@@ -733,8 +892,72 @@ export type ListProductsQuery = {
     items:  Array< {
       __typename: "Product",
       id: string,
-      tenantId: string,
+      tenantId?: string | null,
       name?: string | null,
+      category?:  {
+        __typename: "Category",
+        id: string,
+        tenantId?: string | null,
+        name?: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      price?: number | null,
+      createdAt: string,
+      updatedAt: string,
+      categoryProductsId?: string | null,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type GetCategoryQueryVariables = {
+  id: string,
+};
+
+export type GetCategoryQuery = {
+  getCategory?:  {
+    __typename: "Category",
+    id: string,
+    tenantId?: string | null,
+    name?: string | null,
+    products?:  {
+      __typename: "ModelProductConnection",
+      items:  Array< {
+        __typename: "Product",
+        id: string,
+        tenantId?: string | null,
+        name?: string | null,
+        price?: number | null,
+        createdAt: string,
+        updatedAt: string,
+        categoryProductsId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListCategoriesQueryVariables = {
+  filter?: ModelCategoryFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListCategoriesQuery = {
+  listCategories?:  {
+    __typename: "ModelCategoryConnection",
+    items:  Array< {
+      __typename: "Category",
+      id: string,
+      tenantId?: string | null,
+      name?: string | null,
+      products?:  {
+        __typename: "ModelProductConnection",
+        nextToken?: string | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
     } | null >,
@@ -753,7 +976,7 @@ export type OnCreateOrderSubscription = {
     table?:  {
       __typename: "Table",
       id: string,
-      tenantId: string,
+      tenantId?: string | null,
       full?: boolean | null,
       number?: number | null,
       orders?:  {
@@ -769,7 +992,6 @@ export type OnCreateOrderSubscription = {
       createdAt: string,
       updatedAt: string,
       tableOrdersId?: string | null,
-      tableOrdersTenantId?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -787,7 +1009,7 @@ export type OnUpdateOrderSubscription = {
     table?:  {
       __typename: "Table",
       id: string,
-      tenantId: string,
+      tenantId?: string | null,
       full?: boolean | null,
       number?: number | null,
       orders?:  {
@@ -803,7 +1025,6 @@ export type OnUpdateOrderSubscription = {
       createdAt: string,
       updatedAt: string,
       tableOrdersId?: string | null,
-      tableOrdersTenantId?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -821,7 +1042,7 @@ export type OnDeleteOrderSubscription = {
     table?:  {
       __typename: "Table",
       id: string,
-      tenantId: string,
+      tenantId?: string | null,
       full?: boolean | null,
       number?: number | null,
       orders?:  {
@@ -837,7 +1058,6 @@ export type OnDeleteOrderSubscription = {
       createdAt: string,
       updatedAt: string,
       tableOrdersId?: string | null,
-      tableOrdersTenantId?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -848,7 +1068,7 @@ export type OnCreateTableSubscription = {
   onCreateTable?:  {
     __typename: "Table",
     id: string,
-    tenantId: string,
+    tenantId?: string | null,
     full?: boolean | null,
     number?: number | null,
     orders?:  {
@@ -861,13 +1081,12 @@ export type OnCreateTableSubscription = {
       table?:  {
         __typename: "Table",
         id: string,
-        tenantId: string,
+        tenantId?: string | null,
         full?: boolean | null,
         number?: number | null,
         createdAt: string,
         updatedAt: string,
         tableOrdersId?: string | null,
-        tableOrdersTenantId?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
@@ -875,7 +1094,6 @@ export type OnCreateTableSubscription = {
     createdAt: string,
     updatedAt: string,
     tableOrdersId?: string | null,
-    tableOrdersTenantId?: string | null,
   } | null,
 };
 
@@ -883,7 +1101,7 @@ export type OnUpdateTableSubscription = {
   onUpdateTable?:  {
     __typename: "Table",
     id: string,
-    tenantId: string,
+    tenantId?: string | null,
     full?: boolean | null,
     number?: number | null,
     orders?:  {
@@ -896,13 +1114,12 @@ export type OnUpdateTableSubscription = {
       table?:  {
         __typename: "Table",
         id: string,
-        tenantId: string,
+        tenantId?: string | null,
         full?: boolean | null,
         number?: number | null,
         createdAt: string,
         updatedAt: string,
         tableOrdersId?: string | null,
-        tableOrdersTenantId?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
@@ -910,7 +1127,6 @@ export type OnUpdateTableSubscription = {
     createdAt: string,
     updatedAt: string,
     tableOrdersId?: string | null,
-    tableOrdersTenantId?: string | null,
   } | null,
 };
 
@@ -918,7 +1134,7 @@ export type OnDeleteTableSubscription = {
   onDeleteTable?:  {
     __typename: "Table",
     id: string,
-    tenantId: string,
+    tenantId?: string | null,
     full?: boolean | null,
     number?: number | null,
     orders?:  {
@@ -931,13 +1147,12 @@ export type OnDeleteTableSubscription = {
       table?:  {
         __typename: "Table",
         id: string,
-        tenantId: string,
+        tenantId?: string | null,
         full?: boolean | null,
         number?: number | null,
         createdAt: string,
         updatedAt: string,
         tableOrdersId?: string | null,
-        tableOrdersTenantId?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
@@ -945,7 +1160,6 @@ export type OnDeleteTableSubscription = {
     createdAt: string,
     updatedAt: string,
     tableOrdersId?: string | null,
-    tableOrdersTenantId?: string | null,
   } | null,
 };
 
@@ -953,10 +1167,24 @@ export type OnCreateProductSubscription = {
   onCreateProduct?:  {
     __typename: "Product",
     id: string,
-    tenantId: string,
+    tenantId?: string | null,
     name?: string | null,
+    category?:  {
+      __typename: "Category",
+      id: string,
+      tenantId?: string | null,
+      name?: string | null,
+      products?:  {
+        __typename: "ModelProductConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    price?: number | null,
     createdAt: string,
     updatedAt: string,
+    categoryProductsId?: string | null,
   } | null,
 };
 
@@ -964,10 +1192,24 @@ export type OnUpdateProductSubscription = {
   onUpdateProduct?:  {
     __typename: "Product",
     id: string,
-    tenantId: string,
+    tenantId?: string | null,
     name?: string | null,
+    category?:  {
+      __typename: "Category",
+      id: string,
+      tenantId?: string | null,
+      name?: string | null,
+      products?:  {
+        __typename: "ModelProductConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    price?: number | null,
     createdAt: string,
     updatedAt: string,
+    categoryProductsId?: string | null,
   } | null,
 };
 
@@ -975,8 +1217,97 @@ export type OnDeleteProductSubscription = {
   onDeleteProduct?:  {
     __typename: "Product",
     id: string,
-    tenantId: string,
+    tenantId?: string | null,
     name?: string | null,
+    category?:  {
+      __typename: "Category",
+      id: string,
+      tenantId?: string | null,
+      name?: string | null,
+      products?:  {
+        __typename: "ModelProductConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    price?: number | null,
+    createdAt: string,
+    updatedAt: string,
+    categoryProductsId?: string | null,
+  } | null,
+};
+
+export type OnCreateCategorySubscription = {
+  onCreateCategory?:  {
+    __typename: "Category",
+    id: string,
+    tenantId?: string | null,
+    name?: string | null,
+    products?:  {
+      __typename: "ModelProductConnection",
+      items:  Array< {
+        __typename: "Product",
+        id: string,
+        tenantId?: string | null,
+        name?: string | null,
+        price?: number | null,
+        createdAt: string,
+        updatedAt: string,
+        categoryProductsId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateCategorySubscription = {
+  onUpdateCategory?:  {
+    __typename: "Category",
+    id: string,
+    tenantId?: string | null,
+    name?: string | null,
+    products?:  {
+      __typename: "ModelProductConnection",
+      items:  Array< {
+        __typename: "Product",
+        id: string,
+        tenantId?: string | null,
+        name?: string | null,
+        price?: number | null,
+        createdAt: string,
+        updatedAt: string,
+        categoryProductsId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteCategorySubscription = {
+  onDeleteCategory?:  {
+    __typename: "Category",
+    id: string,
+    tenantId?: string | null,
+    name?: string | null,
+    products?:  {
+      __typename: "ModelProductConnection",
+      items:  Array< {
+        __typename: "Product",
+        id: string,
+        tenantId?: string | null,
+        name?: string | null,
+        price?: number | null,
+        createdAt: string,
+        updatedAt: string,
+        categoryProductsId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
