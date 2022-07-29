@@ -1,11 +1,12 @@
 import { API, Storage } from "aws-amplify";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { AmplifyS3Image } from "@aws-amplify/ui-react/legacy";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { CreateOrderProductsInput, Product as ProductType } from "../src/API";
 import { createOrderProducts } from "../src/graphql/mutations";
 import { currentOrderAtom, OrderProducstAtom } from "../src/state/atoms";
 import { SaveProductAtom } from "../src/state/selectors";
-
+import Image from "next/image";
 interface ProductProps {
   product: ProductType;
 }
@@ -19,6 +20,7 @@ const Product = ({ product }: ProductProps) => {
   const { price, name, description, image } = product;
   const [add, setAdd] = useState(false);
   const currentOrder = useRecoilValue(currentOrderAtom);
+  const [productImage, setProductImage] = useState(image);
   const [orderProductAtom, setOrderProductAtom] =
     useRecoilState(OrderProducstAtom);
   const saveNewProduct = useSetRecoilState(SaveProductAtom);
@@ -44,30 +46,34 @@ const Product = ({ product }: ProductProps) => {
     }
   };
 
-  async function getProductById() {
-    
+  async function setPhoto() {
     const s3Image = await Storage.get(image as string);
-    
-    console.log("product:", s3Image);
+    const req = new Request(s3Image);
+    setProductImage(req.url);
   }
 
-  const renderImage = () => {
-    getProductById()
-    return <div>hola</div>
-  }
+  useEffect(() => {
+    setPhoto();
+  }, [image]);
 
   return (
     <div
-      className={`bg-white shadow-md rounded-md w-56 my-3 ${
+      className={`bg-white shadow-md rounded-md w-48 my-3 ${
         add === false ? "max-h-52" : ""
       }`}
       onClick={open}
     >
       {/* image */}
       {image !== "" ? (
-        renderImage()
+        <div className="h-28 w-48 bg-gray-400 rounded-t-md relative">
+          <img
+            src={productImage ?? ""}
+            className="rounded-t-md"
+            style={{ objectFit: "fill", width: "20rem", height: "7rem" }}
+          />
+        </div>
       ) : (
-        <div className="h-28 w-54 bg-gray-400 rounded-t-md relative"></div>
+        <div className="h-28 w-48 bg-gray-400 rounded-t-md relative"></div>
       )}
 
       {/* )} */}

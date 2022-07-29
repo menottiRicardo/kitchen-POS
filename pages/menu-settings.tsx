@@ -1,12 +1,13 @@
-import { API, graphqlOperation } from "aws-amplify";
+import { API, graphqlOperation, Storage } from "aws-amplify";
+import image from "next/image";
 import React, { ReactElement, useEffect, useState } from "react";
 import LeftMenu from "../components/Layout/LeftMenu";
 import NewProduct from "../components/Modals/NewProduct";
 import Product from "../components/Product";
+import SettingProduct from "../components/SettingProduct";
 import CategorySlider from "../components/SlideOvers/CategorySlider";
 import { Category, ModelIDInput, Product as ProductType } from "../src/API";
 import { listCategories, listProducts } from "../src/graphql/queries";
-
 
 const MenuSettings = () => {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -84,35 +85,16 @@ const MenuSettings = () => {
 
       {/* products */}
       <div className="mt-10 flex">
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-5 gap-4">
           <div
-            className="bg-gray-300 text-gray-500 shadow-md rounded-md w-56 h-44 flex items-center justify-center text-4xl border-dashed border-2"
+            className="bg-gray-300 text-gray-500 shadow-md rounded-md w-48 h-44 flex items-center justify-center text-4xl border-dashed border-2"
             onClick={() => setOpenNewProduct(true)}
           >
             +
           </div>
 
           {products.length > 0 &&
-            products.map((prod) => (
-              <div
-                className="bg-white shadow-md rounded-md w-56 h-44"
-                key={prod.id}
-              >
-                {/* image */}
-
-                <div className="h-28 w-54 bg-gray-400 rounded-t-md relative"></div>
-                {/* )} */}
-
-                <div className="px-3 pb-3">
-                  <h2 className="font-medium text-xl uppercase">{prod.name}</h2>
-
-                  <p className="text-gray-500 text-sm my-2">
-                    {prod.description}
-                  </p>
-                  <p className="font-bold text-xl">${prod.price}</p>
-                </div>
-              </div>
-            ))}
+            products.map((prod) => <SettingProduct prod={prod} />)}
         </div>
       </div>
     </div>
