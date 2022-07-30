@@ -2,31 +2,29 @@
 import { Dispatch, Fragment, SetStateAction, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XIcon } from "@heroicons/react/outline";
-import { CreateCategoryInput } from "../../src/API";
-import { createCategory } from "../../src/graphql/mutations";
-import { API } from "aws-amplify";
 
-export default function CategorySlider({
+import { DataStore } from "aws-amplify";
+import { Order,  Status } from "../../src/models";
+
+export default function OrderSlider({
   open,
   setOpen,
-  
+  id,
+  order
 }: {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
-  
+  id: string;
+  order: Order
 }) {
-  const [name, setName] = useState('');
-  const createCategoryGraph = async () => {
-    const newCategory: CreateCategoryInput = {
-      tenantId: "2",
-      name,
-    };
+  const [selected, setSelected] = useState("");
 
-    const created: any = await API.graphql({
-      query: createCategory,
-      variables: { input: newCategory },
-    });
-    setOpen(false)
+  const createCategoryGraph = async () => {
+    
+    const newUpdate = await DataStore.save(Order.copyOf(order, o => {o.status = Status.PREPARED}))
+   
+    console.log(newUpdate)
+    setOpen(false);
   };
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -78,22 +76,32 @@ export default function CategorySlider({
                   </Transition.Child>
                   <div className="flex h-full flex-col overflow-y-scroll bg-white py-6 shadow-xl">
                     <div className="px-4 sm:px-6">
-                      <Dialog.Title className="text-lg font-medium text-gray-900">
-                        Nueva Categoria
+                      <Dialog.Title className="text-2xl font-medium text-gray-900">
+                        Cambiar Estatus
                       </Dialog.Title>
                     </div>
-                    <div className="relative mt-6 flex-1 px-4 sm:px-6">
+                    <div className="relative mt-6 flex px-4 sm:px-6 justify-center items-center h-full">
                       {/* Replace with your content */}
-                      <div className="absolute inset-0 px-4 sm:px-6">
-                        <input
-                          type="text"
-                          value={name as string}
-                          onChange={(e) => setName(e.target.value)}
-                          className="bg-white border rounded-md px-2 py-3 w-full pl-3"
-                        />
-                        <button className="p-3 bg-primary-300 rounded-md text-white font-medium mt-4" onClick={createCategoryGraph}>Crear</button>
+                      <div>
+                        <div
+                          className={`bg-gray-100 shadow-md h-48 w-48 flex items-center rounded-md justify-center font-medium p-4 ${
+                            selected === "preparada"
+                              ? "border-2 border-primary-300"
+                              : "border-2 border-gray-100"
+                          }`}
+                          onClick={() => setSelected("preparada")}
+                        >
+                          <p className="p-2 text-2xl">Preparada</p>
+                        </div>
+                        <button
+                          className="p-3 bg-primary-300 rounded-md text-white font-medium mt-4 w-full"
+                          onClick={createCategoryGraph}
+                        >
+                          Guardar
+                        </button>
+
+                        {/* /End replace */}
                       </div>
-                      {/* /End replace */}
                     </div>
                   </div>
                 </Dialog.Panel>

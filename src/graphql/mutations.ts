@@ -2,615 +2,165 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const createOrder = /* GraphQL */ `
-  mutation CreateOrder(
-    $input: CreateOrderInput!
-    $condition: ModelOrderConditionInput
+export const createIngredient = /* GraphQL */ `
+  mutation CreateIngredient(
+    $input: CreateIngredientInput!
+    $condition: ModelIngredientConditionInput
   ) {
-    createOrder(input: $input, condition: $condition) {
+    createIngredient(input: $input, condition: $condition) {
       id
-      tenantId
       name
-      total
-      tableId
-      table {
-        id
-        tenantId
-        full
-        number
-        orders {
-          id
-          tenantId
-          name
-          total
-          tableId
-          table {
-            id
-            tenantId
-            full
-            number
-            createdAt
-            updatedAt
-            tableOrdersId
-          }
-          status
-          products {
-            nextToken
-          }
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-        tableOrdersId
-      }
-      status
+      qty
       products {
         items {
           id
-          orderID
+          ingredientID
           productID
-          order {
+          ingredient {
             id
-            tenantId
             name
-            total
-            tableId
-            status
+            qty
             createdAt
             updatedAt
+            _version
+            _deleted
+            _lastChangedAt
           }
           product {
             id
-            tenantId
             name
             price
             image
             description
+            categoryID
             createdAt
             updatedAt
-            categoryProductsId
+            _version
+            _deleted
+            _lastChangedAt
           }
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
         }
         nextToken
+        startedAt
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
-export const updateOrder = /* GraphQL */ `
-  mutation UpdateOrder(
-    $input: UpdateOrderInput!
-    $condition: ModelOrderConditionInput
+export const updateIngredient = /* GraphQL */ `
+  mutation UpdateIngredient(
+    $input: UpdateIngredientInput!
+    $condition: ModelIngredientConditionInput
   ) {
-    updateOrder(input: $input, condition: $condition) {
+    updateIngredient(input: $input, condition: $condition) {
       id
-      tenantId
       name
-      total
-      tableId
-      table {
-        id
-        tenantId
-        full
-        number
-        orders {
-          id
-          tenantId
-          name
-          total
-          tableId
-          table {
-            id
-            tenantId
-            full
-            number
-            createdAt
-            updatedAt
-            tableOrdersId
-          }
-          status
-          products {
-            nextToken
-          }
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-        tableOrdersId
-      }
-      status
+      qty
       products {
         items {
           id
-          orderID
+          ingredientID
           productID
-          order {
+          ingredient {
             id
-            tenantId
             name
-            total
-            tableId
-            status
+            qty
             createdAt
             updatedAt
+            _version
+            _deleted
+            _lastChangedAt
           }
           product {
             id
-            tenantId
             name
             price
             image
             description
+            categoryID
             createdAt
             updatedAt
-            categoryProductsId
+            _version
+            _deleted
+            _lastChangedAt
           }
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
         }
         nextToken
+        startedAt
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
-export const deleteOrder = /* GraphQL */ `
-  mutation DeleteOrder(
-    $input: DeleteOrderInput!
-    $condition: ModelOrderConditionInput
+export const deleteIngredient = /* GraphQL */ `
+  mutation DeleteIngredient(
+    $input: DeleteIngredientInput!
+    $condition: ModelIngredientConditionInput
   ) {
-    deleteOrder(input: $input, condition: $condition) {
+    deleteIngredient(input: $input, condition: $condition) {
       id
-      tenantId
       name
-      total
-      tableId
-      table {
-        id
-        tenantId
-        full
-        number
-        orders {
-          id
-          tenantId
-          name
-          total
-          tableId
-          table {
-            id
-            tenantId
-            full
-            number
-            createdAt
-            updatedAt
-            tableOrdersId
-          }
-          status
-          products {
-            nextToken
-          }
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-        tableOrdersId
-      }
-      status
+      qty
       products {
         items {
           id
-          orderID
+          ingredientID
           productID
-          order {
+          ingredient {
             id
-            tenantId
             name
-            total
-            tableId
-            status
+            qty
             createdAt
             updatedAt
+            _version
+            _deleted
+            _lastChangedAt
           }
           product {
             id
-            tenantId
             name
             price
             image
             description
+            categoryID
             createdAt
             updatedAt
-            categoryProductsId
+            _version
+            _deleted
+            _lastChangedAt
           }
           createdAt
           updatedAt
+          _version
+          _deleted
+          _lastChangedAt
         }
         nextToken
+        startedAt
       }
       createdAt
       updatedAt
-    }
-  }
-`;
-export const createTable = /* GraphQL */ `
-  mutation CreateTable(
-    $input: CreateTableInput!
-    $condition: ModelTableConditionInput
-  ) {
-    createTable(input: $input, condition: $condition) {
-      id
-      tenantId
-      full
-      number
-      orders {
-        id
-        tenantId
-        name
-        total
-        tableId
-        table {
-          id
-          tenantId
-          full
-          number
-          orders {
-            id
-            tenantId
-            name
-            total
-            tableId
-            status
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-          tableOrdersId
-        }
-        status
-        products {
-          items {
-            id
-            orderID
-            productID
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-      tableOrdersId
-    }
-  }
-`;
-export const updateTable = /* GraphQL */ `
-  mutation UpdateTable(
-    $input: UpdateTableInput!
-    $condition: ModelTableConditionInput
-  ) {
-    updateTable(input: $input, condition: $condition) {
-      id
-      tenantId
-      full
-      number
-      orders {
-        id
-        tenantId
-        name
-        total
-        tableId
-        table {
-          id
-          tenantId
-          full
-          number
-          orders {
-            id
-            tenantId
-            name
-            total
-            tableId
-            status
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-          tableOrdersId
-        }
-        status
-        products {
-          items {
-            id
-            orderID
-            productID
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-      tableOrdersId
-    }
-  }
-`;
-export const deleteTable = /* GraphQL */ `
-  mutation DeleteTable(
-    $input: DeleteTableInput!
-    $condition: ModelTableConditionInput
-  ) {
-    deleteTable(input: $input, condition: $condition) {
-      id
-      tenantId
-      full
-      number
-      orders {
-        id
-        tenantId
-        name
-        total
-        tableId
-        table {
-          id
-          tenantId
-          full
-          number
-          orders {
-            id
-            tenantId
-            name
-            total
-            tableId
-            status
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-          tableOrdersId
-        }
-        status
-        products {
-          items {
-            id
-            orderID
-            productID
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-      tableOrdersId
-    }
-  }
-`;
-export const createProduct = /* GraphQL */ `
-  mutation CreateProduct(
-    $input: CreateProductInput!
-    $condition: ModelProductConditionInput
-  ) {
-    createProduct(input: $input, condition: $condition) {
-      id
-      tenantId
-      name
-      category {
-        id
-        tenantId
-        name
-        products {
-          items {
-            id
-            tenantId
-            name
-            price
-            image
-            description
-            createdAt
-            updatedAt
-            categoryProductsId
-          }
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      price
-      image
-      description
-      orders {
-        items {
-          id
-          orderID
-          productID
-          order {
-            id
-            tenantId
-            name
-            total
-            tableId
-            status
-            createdAt
-            updatedAt
-          }
-          product {
-            id
-            tenantId
-            name
-            price
-            image
-            description
-            createdAt
-            updatedAt
-            categoryProductsId
-          }
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-      categoryProductsId
-    }
-  }
-`;
-export const updateProduct = /* GraphQL */ `
-  mutation UpdateProduct(
-    $input: UpdateProductInput!
-    $condition: ModelProductConditionInput
-  ) {
-    updateProduct(input: $input, condition: $condition) {
-      id
-      tenantId
-      name
-      category {
-        id
-        tenantId
-        name
-        products {
-          items {
-            id
-            tenantId
-            name
-            price
-            image
-            description
-            createdAt
-            updatedAt
-            categoryProductsId
-          }
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      price
-      image
-      description
-      orders {
-        items {
-          id
-          orderID
-          productID
-          order {
-            id
-            tenantId
-            name
-            total
-            tableId
-            status
-            createdAt
-            updatedAt
-          }
-          product {
-            id
-            tenantId
-            name
-            price
-            image
-            description
-            createdAt
-            updatedAt
-            categoryProductsId
-          }
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-      categoryProductsId
-    }
-  }
-`;
-export const deleteProduct = /* GraphQL */ `
-  mutation DeleteProduct(
-    $input: DeleteProductInput!
-    $condition: ModelProductConditionInput
-  ) {
-    deleteProduct(input: $input, condition: $condition) {
-      id
-      tenantId
-      name
-      category {
-        id
-        tenantId
-        name
-        products {
-          items {
-            id
-            tenantId
-            name
-            price
-            image
-            description
-            createdAt
-            updatedAt
-            categoryProductsId
-          }
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      price
-      image
-      description
-      orders {
-        items {
-          id
-          orderID
-          productID
-          order {
-            id
-            tenantId
-            name
-            total
-            tableId
-            status
-            createdAt
-            updatedAt
-          }
-          product {
-            id
-            tenantId
-            name
-            price
-            image
-            description
-            createdAt
-            updatedAt
-            categoryProductsId
-          }
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-      categoryProductsId
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
@@ -621,34 +171,33 @@ export const createCategory = /* GraphQL */ `
   ) {
     createCategory(input: $input, condition: $condition) {
       id
-      tenantId
       name
-      products {
+      Products {
         items {
           id
-          tenantId
           name
-          category {
-            id
-            tenantId
-            name
-            createdAt
-            updatedAt
-          }
           price
           image
           description
-          orders {
+          categoryID
+          Ingredients {
             nextToken
+            startedAt
           }
           createdAt
           updatedAt
-          categoryProductsId
+          _version
+          _deleted
+          _lastChangedAt
         }
         nextToken
+        startedAt
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
@@ -659,34 +208,33 @@ export const updateCategory = /* GraphQL */ `
   ) {
     updateCategory(input: $input, condition: $condition) {
       id
-      tenantId
       name
-      products {
+      Products {
         items {
           id
-          tenantId
           name
-          category {
-            id
-            tenantId
-            name
-            createdAt
-            updatedAt
-          }
           price
           image
           description
-          orders {
+          categoryID
+          Ingredients {
             nextToken
+            startedAt
           }
           createdAt
           updatedAt
-          categoryProductsId
+          _version
+          _deleted
+          _lastChangedAt
         }
         nextToken
+        startedAt
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
@@ -697,286 +245,597 @@ export const deleteCategory = /* GraphQL */ `
   ) {
     deleteCategory(input: $input, condition: $condition) {
       id
-      tenantId
       name
-      products {
+      Products {
         items {
           id
-          tenantId
           name
-          category {
-            id
-            tenantId
-            name
-            createdAt
-            updatedAt
-          }
           price
           image
           description
-          orders {
+          categoryID
+          Ingredients {
             nextToken
+            startedAt
           }
           createdAt
           updatedAt
-          categoryProductsId
+          _version
+          _deleted
+          _lastChangedAt
         }
         nextToken
+        startedAt
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
-export const createOrderProducts = /* GraphQL */ `
-  mutation CreateOrderProducts(
-    $input: CreateOrderProductsInput!
-    $condition: ModelOrderProductsConditionInput
+export const createProduct = /* GraphQL */ `
+  mutation CreateProduct(
+    $input: CreateProductInput!
+    $condition: ModelProductConditionInput
   ) {
-    createOrderProducts(input: $input, condition: $condition) {
+    createProduct(input: $input, condition: $condition) {
       id
-      orderID
-      productID
-      order {
-        id
-        tenantId
-        name
-        total
-        tableId
-        table {
+      name
+      price
+      image
+      description
+      categoryID
+      Ingredients {
+        items {
           id
-          tenantId
-          full
-          number
-          orders {
+          ingredientID
+          productID
+          ingredient {
             id
-            tenantId
             name
-            total
-            tableId
-            status
+            qty
             createdAt
             updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          product {
+            id
+            name
+            price
+            image
+            description
+            categoryID
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
           }
           createdAt
           updatedAt
-          tableOrdersId
+          _version
+          _deleted
+          _lastChangedAt
         }
-        status
-        products {
-          items {
-            id
-            orderID
-            productID
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      product {
-        id
-        tenantId
-        name
-        category {
-          id
-          tenantId
-          name
-          products {
-            nextToken
-          }
-          createdAt
-          updatedAt
-        }
-        price
-        image
-        description
-        orders {
-          items {
-            id
-            orderID
-            productID
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-        createdAt
-        updatedAt
-        categoryProductsId
+        nextToken
+        startedAt
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
-export const updateOrderProducts = /* GraphQL */ `
-  mutation UpdateOrderProducts(
-    $input: UpdateOrderProductsInput!
-    $condition: ModelOrderProductsConditionInput
+export const updateProduct = /* GraphQL */ `
+  mutation UpdateProduct(
+    $input: UpdateProductInput!
+    $condition: ModelProductConditionInput
   ) {
-    updateOrderProducts(input: $input, condition: $condition) {
+    updateProduct(input: $input, condition: $condition) {
       id
-      orderID
-      productID
-      order {
-        id
-        tenantId
-        name
-        total
-        tableId
-        table {
+      name
+      price
+      image
+      description
+      categoryID
+      Ingredients {
+        items {
           id
-          tenantId
-          full
-          number
-          orders {
+          ingredientID
+          productID
+          ingredient {
             id
-            tenantId
             name
-            total
-            tableId
-            status
+            qty
             createdAt
             updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          product {
+            id
+            name
+            price
+            image
+            description
+            categoryID
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
           }
           createdAt
           updatedAt
-          tableOrdersId
+          _version
+          _deleted
+          _lastChangedAt
         }
-        status
-        products {
-          items {
-            id
-            orderID
-            productID
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      product {
-        id
-        tenantId
-        name
-        category {
-          id
-          tenantId
-          name
-          products {
-            nextToken
-          }
-          createdAt
-          updatedAt
-        }
-        price
-        image
-        description
-        orders {
-          items {
-            id
-            orderID
-            productID
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-        createdAt
-        updatedAt
-        categoryProductsId
+        nextToken
+        startedAt
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
-export const deleteOrderProducts = /* GraphQL */ `
-  mutation DeleteOrderProducts(
-    $input: DeleteOrderProductsInput!
-    $condition: ModelOrderProductsConditionInput
+export const deleteProduct = /* GraphQL */ `
+  mutation DeleteProduct(
+    $input: DeleteProductInput!
+    $condition: ModelProductConditionInput
   ) {
-    deleteOrderProducts(input: $input, condition: $condition) {
+    deleteProduct(input: $input, condition: $condition) {
       id
-      orderID
-      productID
-      order {
-        id
-        tenantId
-        name
-        total
-        tableId
-        table {
+      name
+      price
+      image
+      description
+      categoryID
+      Ingredients {
+        items {
           id
-          tenantId
-          full
-          number
-          orders {
+          ingredientID
+          productID
+          ingredient {
             id
-            tenantId
             name
-            total
-            tableId
-            status
+            qty
             createdAt
             updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          product {
+            id
+            name
+            price
+            image
+            description
+            categoryID
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
           }
           createdAt
           updatedAt
-          tableOrdersId
+          _version
+          _deleted
+          _lastChangedAt
         }
-        status
-        products {
-          items {
-            id
-            orderID
-            productID
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      product {
-        id
-        tenantId
-        name
-        category {
-          id
-          tenantId
-          name
-          products {
-            nextToken
-          }
-          createdAt
-          updatedAt
-        }
-        price
-        image
-        description
-        orders {
-          items {
-            id
-            orderID
-            productID
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-        createdAt
-        updatedAt
-        categoryProductsId
+        nextToken
+        startedAt
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const createTable = /* GraphQL */ `
+  mutation CreateTable(
+    $input: CreateTableInput!
+    $condition: ModelTableConditionInput
+  ) {
+    createTable(input: $input, condition: $condition) {
+      id
+      full
+      number
+      seats
+      Orders {
+        items {
+          id
+          name
+          total
+          status
+          tableID
+          products {
+            id
+            notes
+            qty
+          }
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const updateTable = /* GraphQL */ `
+  mutation UpdateTable(
+    $input: UpdateTableInput!
+    $condition: ModelTableConditionInput
+  ) {
+    updateTable(input: $input, condition: $condition) {
+      id
+      full
+      number
+      seats
+      Orders {
+        items {
+          id
+          name
+          total
+          status
+          tableID
+          products {
+            id
+            notes
+            qty
+          }
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const deleteTable = /* GraphQL */ `
+  mutation DeleteTable(
+    $input: DeleteTableInput!
+    $condition: ModelTableConditionInput
+  ) {
+    deleteTable(input: $input, condition: $condition) {
+      id
+      full
+      number
+      seats
+      Orders {
+        items {
+          id
+          name
+          total
+          status
+          tableID
+          products {
+            id
+            notes
+            qty
+          }
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const createOrder = /* GraphQL */ `
+  mutation CreateOrder(
+    $input: CreateOrderInput!
+    $condition: ModelOrderConditionInput
+  ) {
+    createOrder(input: $input, condition: $condition) {
+      id
+      name
+      total
+      status
+      tableID
+      products {
+        id
+        notes
+        qty
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const updateOrder = /* GraphQL */ `
+  mutation UpdateOrder(
+    $input: UpdateOrderInput!
+    $condition: ModelOrderConditionInput
+  ) {
+    updateOrder(input: $input, condition: $condition) {
+      id
+      name
+      total
+      status
+      tableID
+      products {
+        id
+        notes
+        qty
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const deleteOrder = /* GraphQL */ `
+  mutation DeleteOrder(
+    $input: DeleteOrderInput!
+    $condition: ModelOrderConditionInput
+  ) {
+    deleteOrder(input: $input, condition: $condition) {
+      id
+      name
+      total
+      status
+      tableID
+      products {
+        id
+        notes
+        qty
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const createProductIngredient = /* GraphQL */ `
+  mutation CreateProductIngredient(
+    $input: CreateProductIngredientInput!
+    $condition: ModelProductIngredientConditionInput
+  ) {
+    createProductIngredient(input: $input, condition: $condition) {
+      id
+      ingredientID
+      productID
+      ingredient {
+        id
+        name
+        qty
+        products {
+          items {
+            id
+            ingredientID
+            productID
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      product {
+        id
+        name
+        price
+        image
+        description
+        categoryID
+        Ingredients {
+          items {
+            id
+            ingredientID
+            productID
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const updateProductIngredient = /* GraphQL */ `
+  mutation UpdateProductIngredient(
+    $input: UpdateProductIngredientInput!
+    $condition: ModelProductIngredientConditionInput
+  ) {
+    updateProductIngredient(input: $input, condition: $condition) {
+      id
+      ingredientID
+      productID
+      ingredient {
+        id
+        name
+        qty
+        products {
+          items {
+            id
+            ingredientID
+            productID
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      product {
+        id
+        name
+        price
+        image
+        description
+        categoryID
+        Ingredients {
+          items {
+            id
+            ingredientID
+            productID
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const deleteProductIngredient = /* GraphQL */ `
+  mutation DeleteProductIngredient(
+    $input: DeleteProductIngredientInput!
+    $condition: ModelProductIngredientConditionInput
+  ) {
+    deleteProductIngredient(input: $input, condition: $condition) {
+      id
+      ingredientID
+      productID
+      ingredient {
+        id
+        name
+        qty
+        products {
+          items {
+            id
+            ingredientID
+            productID
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      product {
+        id
+        name
+        price
+        image
+        description
+        categoryID
+        Ingredients {
+          items {
+            id
+            ingredientID
+            productID
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;

@@ -1,5 +1,5 @@
 projects:
-  admin:
+  web:
     schemaPath: src/graphql/schema.json
     includes:
       - src/graphql/**/*.ts
