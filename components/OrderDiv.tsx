@@ -4,6 +4,7 @@ import {
   Order as OrderType,
   Product as ProductType,
   ProductsOrdered,
+  Status,
 } from "../src/API";
 import { ProductListAtom } from "../src/state/atoms";
 import OrderSlider from "./SlideOvers/OrderSlider";
@@ -18,7 +19,7 @@ const OrderDiv = ({ order }: { order: OrderType }) => {
 
       return (
         <div className="flex justify-between">
-          <p className="text-white font-medium text-xl">{product.name}</p>
+          <p className={`text-white font-medium text-xl ${produu.status === Status.PREPARED ? 'line-through' : ''}`}>{product.name}</p>
           <span className="text-black font-medium text-xl">{produu.qty}</span>
         </div>
       );

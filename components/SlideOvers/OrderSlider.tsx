@@ -4,27 +4,36 @@ import { Dialog, Transition } from "@headlessui/react";
 import { XIcon } from "@heroicons/react/outline";
 
 import { DataStore } from "aws-amplify";
-import { Order,  Status } from "../../src/models";
+import { Order, Status } from "../../src/models";
+import { ProductsOrdered } from "../../src/API";
 
 export default function OrderSlider({
   open,
   setOpen,
   id,
-  order
+  order,
 }: {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
   id: string;
-  order: Order
+  order: Order;
 }) {
   const [selected, setSelected] = useState("");
 
   const createCategoryGraph = async () => {
-    
-    const newUpdate = await DataStore.save(Order.copyOf(order, o => {o.status = Status.PREPARED}))
-   
+    console.log(order);
+    const completeProducts = order?.products?.map((product: any) => ({
+      ...product,
+      status: Status.PREPARED,
+    }));
+    const newUpdate = await DataStore.save(
+      Order.copyOf(order, (o) => {
+        (o.status = Status.PREPARED), (o.products = completeProducts);
+      })
+    );
+
     console.log(newUpdate)
-    setOpen(false);
+    // setOpen(false);
   };
   return (
     <Transition.Root show={open} as={Fragment}>

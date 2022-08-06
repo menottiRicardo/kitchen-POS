@@ -30,7 +30,7 @@ export default function Web() {
   return (
     <>
       <Head>
-        <title>Web App</title>
+        <title>Cocina</title>
       </Head>
 
       {orders.length > 0 ? (
