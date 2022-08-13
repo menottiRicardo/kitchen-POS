@@ -14,7 +14,9 @@ export default function Web() {
   const setProducts = useSetRecoilState(ProductListAtom);
   useEffect(() => {
     const getProducts = async () => {
-      const product: any = await API.graphql(graphqlOperation(listProducts));
+      const product: any = await API.graphql(
+        graphqlOperation(listProducts, { limit: 200 })
+      );
 
       setProducts(product.data.listProducts.items);
     };
@@ -40,7 +42,9 @@ export default function Web() {
           ))}
         </div>
       ) : (
-        <h1 className="font-bold text-4xl text-center text-primary-300 mt-20">No Hay Ordenes Disponibles</h1>
+        <h1 className="font-bold text-4xl text-center text-primary-300 mt-20">
+          No Hay Ordenes Disponibles
+        </h1>
       )}
     </>
   );

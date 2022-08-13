@@ -18,8 +18,8 @@ const OrderDiv = ({ order }: { order: OrderType }) => {
       const product = productsList.filter((prod) => prod.id === produu.id)[0];
 
       return (
-        <div className="flex justify-between">
-          <p className={`text-white font-medium text-xl ${produu.status === Status.PREPARED ? 'line-through' : ''}`}>{product.name}</p>
+        <div className="flex justify-between items-center">
+          <p className={`text-white font-medium text-xl ${produu.status === Status.PREPARED ? 'line-through' : ''}`}>{product?.name}</p>
           <span className="text-black font-medium text-xl">{produu.qty}</span>
         </div>
       );
