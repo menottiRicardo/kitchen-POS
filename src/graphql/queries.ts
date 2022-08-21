@@ -2,6 +2,73 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const getDiscounts = /* GraphQL */ `
+  query GetDiscounts($id: ID!) {
+    getDiscounts(id: $id) {
+      id
+      nam
+      code
+      percentage
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const listDiscounts = /* GraphQL */ `
+  query ListDiscounts(
+    $filter: ModelDiscountsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listDiscounts(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        nam
+        code
+        percentage
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const syncDiscounts = /* GraphQL */ `
+  query SyncDiscounts(
+    $filter: ModelDiscountsFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncDiscounts(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        nam
+        code
+        percentage
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
 export const getIngredient = /* GraphQL */ `
   query GetIngredient($id: ID!) {
     getIngredient(id: $id) {
@@ -405,7 +472,12 @@ export const getTable = /* GraphQL */ `
             qty
             price
             status
+            name
+            category
+            remaing
           }
+          paymentId
+          mesero
           createdAt
           updatedAt
           _version
@@ -415,6 +487,7 @@ export const getTable = /* GraphQL */ `
         nextToken
         startedAt
       }
+      currentOrder
       createdAt
       updatedAt
       _version
@@ -442,6 +515,8 @@ export const listTables = /* GraphQL */ `
             total
             status
             tableID
+            paymentId
+            mesero
             createdAt
             updatedAt
             _version
@@ -451,6 +526,7 @@ export const listTables = /* GraphQL */ `
           nextToken
           startedAt
         }
+        currentOrder
         createdAt
         updatedAt
         _version
@@ -487,6 +563,8 @@ export const syncTables = /* GraphQL */ `
             total
             status
             tableID
+            paymentId
+            mesero
             createdAt
             updatedAt
             _version
@@ -496,6 +574,7 @@ export const syncTables = /* GraphQL */ `
           nextToken
           startedAt
         }
+        currentOrder
         createdAt
         updatedAt
         _version
@@ -521,7 +600,12 @@ export const getOrder = /* GraphQL */ `
         qty
         price
         status
+        name
+        category
+        remaing
       }
+      paymentId
+      mesero
       createdAt
       updatedAt
       _version
@@ -549,7 +633,12 @@ export const listOrders = /* GraphQL */ `
           qty
           price
           status
+          name
+          category
+          remaing
         }
+        paymentId
+        mesero
         createdAt
         updatedAt
         _version
@@ -586,7 +675,12 @@ export const syncOrders = /* GraphQL */ `
           qty
           price
           status
+          name
+          category
+          remaing
         }
+        paymentId
+        mesero
         createdAt
         updatedAt
         _version

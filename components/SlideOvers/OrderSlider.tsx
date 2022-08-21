@@ -25,6 +25,7 @@ export default function OrderSlider({
     const completeProducts = order?.products?.map((product: any) => ({
       ...product,
       status: Status.PREPARED,
+      remaing: 0
     }));
     const newUpdate = await DataStore.save(
       Order.copyOf(order, (o) => {
